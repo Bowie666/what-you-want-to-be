@@ -1,9 +1,16 @@
+"""6 class bool([x])
+返回一个布尔值，True 或者 False。如果 x 是假的或者被省略，返回 False；其他情况返回 True。
+bool 类是 int 的子类。其他类不能继承自它。它只有 False 和 True 两个实例。"""
+# print(bool(4))  # True
+# print(bool(0))  # False
+# print(bool(-1))  # True
+
 """5 bin(x)
 将一个整数转变为一个前缀为“0b”的二进制字符串。"""
-print(bin(14))  # 0b1110
-# 这个是把0b去掉了
-print(format(14, 'b'))  # 1110
-print(format(14, '#b'))  # 0b1110
+# print(bin(14))  # 0b1110
+# # 这个是把0b去掉了
+# print(format(14, 'b'))  # 1110
+# print(format(14, '#b'))  # 0b1110
 
 """4 ascii(object)可能用不大到
 就像函数 repr()，返回一个对象可打印的字符串，
