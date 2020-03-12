@@ -1,3 +1,67 @@
+"""11 @classmethod
+把一个方法封装成类方法。就是调用的时候不需要实例化了"""
+
+"""10 chr(i) 就是返回当前整数对应的 ASCII 字符。
+返回 Unicode 码位为整数 i 的字符的字符串格式。
+例如，chr(97) 返回字符串 'a'，chr(8364) 返回字符串 '€'。这是 ord() 的逆函数。
+
+实参的合法范围是 0 到 1,114,111（16 进制表示是 0x10FFFF）。
+如果 i 超过这个范围，会触发 ValueError 异常。"""
+# print(chr(41))  # )
+# print(chr(97))  # a
+# print(chr(8364))  # €
+
+"""9 callable(object)
+用于检查一个对象是否是可调用的。如果返回 True，object 仍然可能调用失败；
+但如果返回 False，调用对象 object 绝对不会成功。
+对于函数、方法、lambda 函式、 类以及实现了 __call__ 方法的类实例, 它都返回 True"""
+# print(callable(object))
+# print(callable(0))
+# print(callable(1))
+# print(callable("look"))
+# def add(a, b):
+#     return a + b
+# print(callable(add))
+#
+# class B:
+#     def method(self):
+#         return 0
+# # 这个是声明
+# print(callable(B))
+# # 这个是创建实例
+# b = B()
+# print(callable(b))
+
+"""8 class bytes([source[, encoding[, errors]]])
+返回一个新的“bytes”对象， 是一个不可变序列，包含范围为 0 <= x < 256 的整数。
+bytes 是 bytearray 的不可变版本 - 它有其中不改变序列的方法和相同的索引、切片操作。"""
+# print(bytes())  # b''
+# print(bytes(3))  # b'\x00\x00\x00'
+# print(bytes(4))  # b'\x00\x00\x00\x00'
+# print(bytes([1, 2, 3]))  # b'\x01\x02\x03'
+# print(bytes([1, 12, 3, 4]))  # b'\x01\x0c\x03\x04'
+# print(bytes('runoob', 'utf-8'))  # b'runoob'
+
+"""7 class bytearray([source[, encoding[, errors]]])
+返回一个新的 bytes 数组。 bytearray 类是一个可变序列，包含范围为 0 <= x < 256 的整数。
+它有可变序列大部分常见的方法，见 可变序列类型 的描述；同时有 bytes 类型的大部分方法，
+x	        创建 bytearray 对象时使用的资源 如果是整数，则会创建指定大小的空 bytearray 对象。
+            如果是字符串，请确保规定了资源的编码。
+encoding	字符串的编码
+error	    规定若编码失败要做什么。
+
+如果 source 为整数，则返回一个长度为 source 的初始化数组；
+如果 source 为字符串，则按照指定的 encoding 将字符串转换为字节序列；
+如果 source 为可迭代类型，则元素必须为[0 ,255] 中的整数；
+如果 source 为与 buffer 接口一致的对象，则此对象也可以被用于初始化 bytearray。
+如果没有输入任何参数，默认就是初始化数组为0个元素"""
+# print(bytearray())  # bytearray(b'')
+# print(bytearray(3))  # bytearray(b'\x00\x00\x00')
+# print(bytearray(4))  # bytearray(b'\x00\x00\x00\x00')
+# print(bytearray([1, 2, 3]))  # bytearray(b'\x01\x02\x03')
+# print(bytearray([1, 12, 3, 4]))  # bytearray(b'\x01\x0c\x03\x04')
+# print(bytearray('runoob', 'utf-8'))  # bytearray(b'runoob')
+
 """6 class bool([x])
 返回一个布尔值，True 或者 False。如果 x 是假的或者被省略，返回 False；其他情况返回 True。
 bool 类是 int 的子类。其他类不能继承自它。它只有 False 和 True 两个实例。"""
