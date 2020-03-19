@@ -1,6 +1,79 @@
+"""16 dir([object])
+如果没有实参，则返回当前本地作用域中的名称列表。如果有实参，它会尝试返回该对象的有效属性列表。
+如果对象有一个名为 __dir__() 的方法，那么该方法将被调用，并且必须返回一个属性列表。
+如果对象是模块对象，则列表包含模块的属性名称。
+如果对象是类型或类对象，则列表包含它们的属性名称，并且递归查找所有基类的属性。
+否则，列表包含对象的属性名称，它的类属性名称，并且递归查找它的类的所有基类的属性。"""
+# print(dir())  # ['__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__']
+# class Nek():
+#     def look(self):
+#         return 1
+#     def __dir__(self):
+#         return 'keyword'
+# print(dir(Nek()))  # ['d', 'e', 'k', 'o', 'r', 'w', 'y']
+
+"""15 class dict(**kwarg)：传入关键字参数
+class dict(mapping, **kwarg)： 传入映射函数
+class dict(iterable, **kwarg)： 传入可迭代对象来构造字典"""
+# print(dict())  # {}
+# print(dict(a='a', b='b'))  # {'a': 'a', 'b': 'b'}
+# print(dict(zip(['o', 'p', 'q'], ['1', '2', '3'])))  # {'o': '1', 'p': '2', 'q': '3'}
+# print(dict(zip(['o', 'p', 'q'], ['1', '2', '3'], ['r', 's', 't'],['1', '2','3'])))
+# # ValueError: dictionary update sequence element #0 has length 4; 2 is required值错误：字典更新序列元素0的长度为4；需要2
+# print(dict(zip(['o', 'p', 'q'], [1, 2, 3])))  # {'o': 1, 'p': 2, 'q': 3}
+# print(dict([('one', 1), ('two', 2), ('three', 3)]))  # {'one': 1, 'two': 2, 'three': 3}
+
+"""14 delattr(object, name)
+setattr() 相关的函数。实参是一个对象和一个字符串。该字符串必须是对象的某个属性。
+如果对象允许，该函数将删除指定的属性。
+例如 delattr(x, 'foobar') 等价于 del x.foobar 。"""
+# class tet():
+#     a = 10
+#     b = 20
+# c = tet()
+# print(c.b)  # 20
+# print(c.a)  # 10
+# delattr(tet, "a")
+# print(c.a)  # AttributeError: 'tet' object has no attribute 'a'
+
+"""13 class complex([real[, imag]])
+返回值为 real + imag*1j 的复数，或将字符串或数字转换为复数。
+如果第一个形参是字符串，则它被解释为一个复数，并且函数调用时必须没有第二个形参。
+第二个形参不能是字符串。每个实参都可以是任意的数值类型（包括复数）。
+如果省略了 imag，则默认值为零，构造函数会像 int 和 float 一样进行数值转换。
+如果两个实参都省略，则返回 0j。"""
+# print(complex("1"))  # (1+0j)
+# print(complex(1, 2))  # (1+2j)
+# print(complex(1))  # (1+0j)
+# print(complex())  # 0j
+# print(complex(2, "2"))  # TypeError: complex() second arg can't be a string
+
+"""12 compile(source, filename, mode, flags=0, dont_inherit=False, optimize=-1)
+将 source 编译成代码或 AST 对象。代码对象可以被 exec() 或 eval() 执行。
+source 可以是常规的字符串、字节字符串，或者 AST （Abstract Syntax Trees）对象
+filename -- 代码文件名称，如果不是从文件读取代码则传递一些可辨认的值（经常会使用 '<string>'）。
+mode -- 指定编译代码的种类。可以指定为 exec, eval, single。
+flags -- 变量作用域，局部命名空间，如果被提供，可以是任何映射对象。。
+flags和dont_inherit是用来控制编译源码时的标志
+Future 语句使用比特位来指定，多个语句可以通过按位或来指定。
+    具体特性的比特位可以通过 __future__ 模块中的 _Feature 类的实例的 compiler_flag 属性来获得。
+optimize 实参指定编译器的优化级别；默认值 -1 选择与解释器的 -O 选项相同的优化级别。
+    显式级别为 0 （没有优化；__debug__ 为真）、1 （断言被删除， __debug__ 为假）或 2 （文档字符串也被删除）。
+如果编译的源码不合法，此函数会触发 SyntaxError 异常；如果源码包含 null 字节，则会触发 ValueError 异常。"""
+# str1 = "for i in range(0,10): print(i)"
+# c = compile(str1, '', 'exec')
+# print(c)  # <code object <module> at 0x000000000284A420, file "", line 1>
+# print(exec(c))  # 0 1 2 3 4 5 6 7 8 9 None
+#
+# str2 = "3 * 4 +5"
+# a = compile(str2, '', 'eval')
+# print(a)  # <code object <module> at 0x00000000028958A0, file "", line 1>
+# print(eval(a))  # 17
+# print(exec(a))  # None
+
 """11 @classmethod
 把一个方法封装成类方法。就是调用的时候不需要实例化了"""
-a=666
+# a = 666
 """10 chr(i) 就是返回当前整数对应的 ASCII 字符。
 返回 Unicode 码位为整数 i 的字符的字符串格式。
 例如，chr(97) 返回字符串 'a'，chr(8364) 返回字符串 '€'。这是 ord() 的逆函数。
