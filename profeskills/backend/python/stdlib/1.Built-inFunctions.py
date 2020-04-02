@@ -1,3 +1,57 @@
+"""21 filter(function, iterable)
+用 iterable 中函数 function 返回真的那些元素，构建一个新的迭代器。
+iterable 可以是一个序列，一个支持迭代的容器，或一个迭代器。
+如果 function 是 None ，则会假设它是一个身份函数，即 iterable 中所有返回假的元素会被移除。"""
+
+"""20 exec(object[, globals[, locals]])
+这个函数支持动态执行 Python 代码。object 必须是字符串或者代码对象。
+如果是字符串，那么该字符串将被解析为一系列 Python 语句并执行（除非发生语法错误）。
+如果是代码对象，它将被直接执行。在任何情况下，被执行的代码都需要和文件输入一样是有效的。
+请注意即使在传递给 exec() 函数的代码的上下文中，return 和 yield 语句也不能在函数定义之外使用。该函数返回值是 None 。
+exec 执行储存在字符串或文件中的Python语句，相比于 eval，exec可以执行更复杂的 Python 代码。"""
+# exec("print('hello')")  # hello
+# exec("for i in range(5):print(i)")  # 0\n 1\n 2\n 3\n 4\n
+
+"""19 eval(expression, globals=None, locals=None)
+其实这个函数很熟悉了，后期要了解更高级的功能
+实参是一个字符串，以及可选的 globals 和 locals。
+globals 实参必须是一个字典。
+locals 可以是任何映射对象。"""
+
+"""18 enumerate(iterable, start=0)
+返回一个枚举对象。
+iterable 必须是一个序列，或 iterator，或其他支持迭代的对象。
+enumerate() 返回的迭代器的 __next__() 方法返回一个元组，
+里面包含一个计数值（从 start 开始，默认为 0）和通过迭代 iterable 获得的值。"""
+# seasons = ['Spring', 'Summer', 'Fall', 'Winter']
+# print(enumerate(seasons))  # <enumerate object at 0x0000000001E06EA0>
+# print(list(enumerate(seasons)))  # [(0, 'Spring'), (1, 'Summer'), (2, 'Fall'), (3, 'Winter')]
+# print(list(enumerate(seasons, start=1)))  # [(1, 'Spring'), (2, 'Summer'), (3, 'Fall'), (4, 'Winter')]
+# 下面这是等价
+# def monk(sequence, start=0):
+#     n = start
+#     for elem in sequence:
+#         yield n, elem
+#         n += 1
+# seasons = ['Spring', 'Summer', 'Fall', 'Winter']
+# print(list(monk(seasons)))  # [(0, 'Spring'), (1, 'Summer'), (2, 'Fall'), (3, 'Winter')]
+
+"""17 divmod(a, b)  就是a除以b
+它将两个（非复数）数字作为实参，并在执行整数除法时返回一对商和余数。
+对于混合操作数类型，适用双目算术运算符的规则。
+对于整数，结果和 (a // b, a % b) 一致。
+对于浮点数，结果是 (q, a % b) ，q 通常是 math.floor(a / b) 但可能会比 1 小。
+在任何情况下， q * b + a % b 和 a 基本相等；
+如果 a % b 非零，它的符号和 b 一样，并且 0 <= abs(a % b) < abs(b) 。"""
+# print(divmod(10, 5))  # (2, 0)
+# print(divmod(5, 3))  # (1, 2)
+# print(divmod(3, 6))  # (0, 3)
+# print(divmod(10.8, 5.6))  # (1.0, 5.200000000000001)
+# print(divmod(5.3, 3.5))  # (1.0, 1.7999999999999998)
+# print(divmod(3.7, 6.5))  # (0.0, 3.7)
+# print(divmod(0, 5))  # (0, 0)
+# # print(divmod(10, 0))  # ZeroDivisionError: integer division or modulo by zero
+
 """16 dir([object])
 如果没有实参，则返回当前本地作用域中的名称列表。如果有实参，它会尝试返回该对象的有效属性列表。
 如果对象有一个名为 __dir__() 的方法，那么该方法将被调用，并且必须返回一个属性列表。
