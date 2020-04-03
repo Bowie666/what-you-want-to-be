@@ -1,7 +1,27 @@
-"""21 filter(function, iterable)
+"""22 class float([x])  返回浮点数
+返回从 数字 或 字符串 x 生成的浮点数。
+如果实参是字符串，则它必须是包含十进制数字的字符串，字符串前面可以有符号，之前也可以有空格。
+可选的符号有 '+' 和 '-' ； '+' 对创建的值没有影响。实参也可以是 NaN（非数字）、正负无穷大的字符串。"""
+# print(float('+1.23'))  # 1.23
+# print(float('   -12345\n'))  # -12345.0
+# print(float('1e-003'))  # 0.001
+# print(float('+1E6'))  # 1000000.0
+# print(float('-Infinity'))  # -inf
+
+"""21 filter(function, iterable) 第一个是函数，第二个是一个可迭代的序列
 用 iterable 中函数 function 返回真的那些元素，构建一个新的迭代器。
 iterable 可以是一个序列，一个支持迭代的容器，或一个迭代器。
-如果 function 是 None ，则会假设它是一个身份函数，即 iterable 中所有返回假的元素会被移除。"""
+如果 function 是 None ，则会假设它是一个身份函数，即 iterable 中所有返回假的元素会被移除。
+filter() 函数用于过滤序列，过滤掉不符合条件的元素，返回一个迭代器对象，如果要转换为列表，可以使用 list() 来转换。"""
+# def is_odd(n):
+#     return n % 2 == 1
+# print(filter(is_odd, [1, 2, 3, 4, 5]))  # <filter object at 0x0000000009D520F0>
+# print(type(filter(is_odd, [1, 2, 3, 4, 5])))  # <class 'filter'>
+# print(list(filter(is_odd, [1, 2, 3, 4, 5])))  # [1, 3, 5]
+# print(filter(is_odd, (1, 2, 3, 4, 5)))  # <filter object at 0x0000000009D520F0>
+# print(type(filter(is_odd, (1, 2, 3, 4, 5))))  # <class 'filter'>
+# print(list(filter(is_odd, (1, 2, 3, 4, 5))))  # [1, 3, 5]
+# print(tuple(filter(is_odd, (1, 2, 3, 4, 5))))  # (1, 3, 5)
 
 """20 exec(object[, globals[, locals]])
 这个函数支持动态执行 Python 代码。object 必须是字符串或者代码对象。
@@ -128,10 +148,10 @@ optimize 实参指定编译器的优化级别；默认值 -1 选择与解释器�
 """11 @classmethod
 把一个方法封装成类方法。就是调用的时候不需要实例化了"""
 # a = 666
+
 """10 chr(i) 就是返回当前整数对应的 ASCII 字符。
 返回 Unicode 码位为整数 i 的字符的字符串格式。
 例如，chr(97) 返回字符串 'a'，chr(8364) 返回字符串 '€'。这是 ord() 的逆函数。
-
 实参的合法范围是 0 到 1,114,111（16 进制表示是 0x10FFFF）。
 如果 i 超过这个范围，会触发 ValueError 异常。"""
 # print(chr(41))  # )
