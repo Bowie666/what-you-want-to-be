@@ -1,17 +1,17 @@
-"""23 format(value[, format_spec])
+"""23 format(value[, format_spec])  -------这个东西有待整理，应该还有别的功能
 将 value 转换为 format_spec 控制的“格式化”表示。
 format_spec 的解释取决于 value 实参的类型，但是大多数内置类型使用标准格式化语法：格式规格迷你语言。
 默认的 format_spec 是一个空字符串，它通常和调用 str(value) 的结果相同。"""
-print("{} {}".format("hello", "world"))  # 不设置指定位置，按默认顺序
-print("{0} {1}".format("hello", "world"))  # 设置指定位置
-print("{1} {0} {1}".format("hello", "world"))  # 设置指定位置
-print("网站名：{name}, 地址 {url}".format(name="菜鸟教程", url="www.runoob.com"))
-
-site = {"name": "菜鸟教程", "url": "www.runoob.com"}  # 通过字典设置参数
-print("网站名：{name}, 地址 {url}".format(**site))
-
-my_list = ['菜鸟教程', 'www.runoob.com']  # 通过列表索引设置参数
-print("网站名：{0[0]}, 地址 {0[1]}".format(my_list))  # "0" 是必须的
+# print("{} {}".format("hello", "world"))  # 不设置指定位置，按默认顺序
+# print("{0} {1}".format("hello", "world"))  # 设置指定位置
+# print("{1} {0} {1}".format("hello", "world"))  # 设置指定位置
+# print("网站名：{name}, 地址 {url}".format(name="菜鸟教程", url="www.runoob.com"))
+#
+# site = {"name": "菜鸟教程", "url": "www.runoob.com"}  # 通过字典设置参数
+# print("网站名：{name}, 地址 {url}".format(**site))
+#
+# my_list = ['菜鸟教程', 'www.runoob.com']  # 通过列表索引设置参数
+# print("网站名：{0[0]}, 地址 {0[1]}".format(my_list))  # "0" 是必须的
 
 """22 class float([x])  返回浮点数
 返回从 数字 或 字符串 x 生成的浮点数。
