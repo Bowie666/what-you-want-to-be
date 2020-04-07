@@ -1,3 +1,11 @@
+"""24 class frozenset([iterable])
+返回一个新的 frozenset 对象，它包含可选参数 iterable 中的元素。iterable -- 可迭代的对象，比如列表、字典、元组等等。
+frozenset() 返回一个冻结的集合，冻结后集合不能再添加或删除任何元素。"""
+# a = frozenset(range(10))  # 生成一个新的不可变集合
+# print(a)  # frozenset({0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
+# b = frozenset('runoob')
+# print(b)  # frozenset({'u', 'b', 'o', 'r', 'n'})   # 创建不可变集合
+
 """23 format(value[, format_spec])  -------这个东西有待整理，应该还有别的功能
 将 value 转换为 format_spec 控制的“格式化”表示。
 format_spec 的解释取决于 value 实参的类型，但是大多数内置类型使用标准格式化语法：格式规格迷你语言。
