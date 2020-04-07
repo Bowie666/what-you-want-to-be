@@ -22,3 +22,9 @@ free = str(round(mem.free / 1024 / 1024))
 print("您当前的内存大小为:" + total + "M")  # 您当前的内存大小为:8076M
 print("已使用:" + used + "M(" + use_per + "%)")  # 已使用:5805M(72%)
 print("可用内存:" + free + "M")  # 可用内存:2271M
+
+
+# 查看CPU
+# interval指定的是计算cpu使用率的时间间隔，percpu则指定是选择总的使用率还是每个cpu的使用率；
+print(psutil.cpu_percent(interval=2))
+print(psutil.cpu_percent(interval=1))
