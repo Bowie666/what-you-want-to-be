@@ -1,4 +1,4 @@
-"""24 class frozenset([iterable])
+"""24 class frozenset([iterable])    ---------有待琢磨
 返回一个新的 frozenset 对象，它包含可选参数 iterable 中的元素。iterable -- 可迭代的对象，比如列表、字典、元组等等。
 frozenset() 返回一个冻结的集合，冻结后集合不能再添加或删除任何元素。"""
 # a = frozenset(range(10))  # 生成一个新的不可变集合
