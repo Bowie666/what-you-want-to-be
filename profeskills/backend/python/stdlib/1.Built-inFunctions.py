@@ -1,3 +1,72 @@
+"""29 help([object])
+启动内置的帮助系统（此函数主要在交互式中使用）。如果没有实参，解释器控制台里会启动交互式帮助系统。
+如果实参是一个字符串，则在模块、函数、类、方法、关键字或文档主题中搜索该字符串，并在控制台上打印帮助信息。
+如果实参是其他任意对象，则会生成该对象的帮助页。该函数通过 site 模块加入到内置命名空间。"""
+# help('sys')  # 查看 sys 模块的帮助 加不加print都可以
+# # ……显示帮助信息……
+# help('str')  # 查看 str 数据类型的帮助
+# # ……显示帮助信息……
+# a = [1, 2, 3]
+# help(a)  # 查看列表 list 帮助信息
+# # ……显示帮助信息……
+# help(a.append)  # 显示list的append方法的帮助
+# # ……显示帮助信息……
+# print(help(set))
+
+"""28 hash(object)
+返回该对象的哈希值（如果它有的话）。哈希值是整数。它们在字典查找元素时用来快速比较字典的键。
+相同大小的数字变量有相同的哈希值（即使它们类型不同，如 1 和 1.0）。"""
+# print(hash('test'))  # 字符串 8726183001633535878
+# print(hash(1))  # 数字1
+# print(hash(str([1, 2, 3])))  # 集合2528267408979111709
+# print(hash(str(sorted({'1': 1}))))  # 字典480096517480272175
+
+"""27 hasattr(object, name)   函数用于判断对象是否包含对应的属性。object -- 对象。name -- 字符串，属性名。
+该实参是一个对象和一个字符串。如果字符串是对象的属性之一的名称，则返回 True，否则返回 False。
+（此功能是通过调用 getattr(object, name) 看是否有 AttributeError 异常来实现的。）"""
+# class Coordinate:
+#     x = 10
+#     y = -5
+#     z = 0
+# point1 = Coordinate()
+# print(hasattr(point1, 'x'))  # True
+# print(hasattr(point1, 'y'))  # True
+# print(hasattr(point1, 'z'))  # True
+# print(hasattr(point1, 'no'))  # 没有该属性False
+
+"""26 globals()
+返回表示当前全局符号表的字典。这总是当前模块的字典（在函数或方法中，不是调用它的模块，而是定义它的模块）。"""
+# a = 'runoob'
+# print(globals(a))  # TypeError: globals() takes no arguments (1 given)
+# print(globals())
+# #  globals 函数返回一个全局变量的字典，包括所有导入的变量。
+# # {'__builtins__': <module '__builtin__' (built-in)>,
+# # '__name__': '__main__', '__doc__': None, 'a': 'runoob', '__package__': None}
+
+"""25 getattr(object, name[, default])
+返回对象命名属性的值。name 必须是字符串。如果该字符串是对象的属性之一，则返回该属性的值。
+例如， getattr(x, 'foobar') 等同于 x.foobar。
+如果指定的属性不存在，且提供了 default 值，则返回它，否则触发 AttributeError。"""
+# class B(object):
+#     bar = 1
+# a1 = B()
+# print(getattr(a1, 'bar'))  # 获取属性 bar 值   1
+# print(getattr(a1, 'bar2'))  # 属性 bar2 不存在，触发异常 AttributeError: 'B' object has no attribute 'bar2'
+# print(getattr(a1, 'bar2', 3))  # 属性 bar2 不存在，但设置了默认值  3
+
+# class A(object):
+#     def set(self, a, b):
+#         x = a
+#         a = b
+#         b = x
+#         print(a, b)
+# d = A()
+# c = getattr(d, 'set')
+# print(c)  # <bound method A.set of <__main__.A object at 0x000000000ADBF898>>
+# print(type(c))  # <class 'method'>
+# print(c(a='1', b='2'))  # None
+# print(type(c(a='1', b='2')))  # <class 'NoneType'>
+
 """24 class frozenset([iterable])    ---------有待琢磨
 返回一个新的 frozenset 对象，它包含可选参数 iterable 中的元素。iterable -- 可迭代的对象，比如列表、字典、元组等等。
 frozenset() 返回一个冻结的集合，冻结后集合不能再添加或删除任何元素。"""
