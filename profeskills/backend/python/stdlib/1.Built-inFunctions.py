@@ -1,3 +1,33 @@
+"""32 input([prompt])   接受一个标准输入数据，返回为 string 类型。prompt: 提示信息
+如果存在 prompt 实参，则将其写入标准输出，末尾不带换行符。
+接下来，该函数从输入中读取一行，将其转换为字符串（除了末尾的换行符）并返回。
+当读取到 EOF 时，则触发 EOFError。例如:"""
+# a = input("input:")  # 输入整数
+# print(type(a))  # 字符串
+# a = input("input:")  # 正确，字符串表达式
+# print(type(a))  # 字符串
+
+"""31 id(object)
+返回对象的内存地址。
+返回对象的“标识值”。该值是一个整数，在此对象的生命周期中保证是唯一且恒定的。
+两个生命期不重叠的对象可能具有相同的 id() 值。"""
+# a = 10
+# print(id(a))  # 1814528400
+
+"""30 hex(x)
+将整数转换为以“0x”为前缀的小写十六进制字符串。
+hex() 函数用于将一个指定数字转换为 16 进制数。
+如果 x 不是 Python int 对象，则必须定义返回整数的 __index__() 方法。
+如果要获取浮点数的十六进制字符串形式，请使用 float.hex() 方法。"""
+# print(hex(255))  # 0xff
+# print(hex(-42))  # -0x2a
+# print(hex(12))  # 0xc
+# print(hex(-12))  # -0xc
+# print(type(hex(12)))  # <class 'str'>
+# print(hex(9))  # 0x9
+# print(float.hex(0.5))  # 0x1.0000000000000p-1
+# print(hex('u'))  # TypeError: 'str' object cannot be interpreted as an integer
+
 """29 help([object])
 启动内置的帮助系统（此函数主要在交互式中使用）。如果没有实参，解释器控制台里会启动交互式帮助系统。
 如果实参是一个字符串，则在模块、函数、类、方法、关键字或文档主题中搜索该字符串，并在控制台上打印帮助信息。
