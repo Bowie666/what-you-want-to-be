@@ -12,19 +12,24 @@ import urllib.request
 import psutil
 import time
 import requests
+import os
+base_dir = os.getcwd()
+print(os.getcwd())
+str = 'cp {0}/config.cfg ./\npython voc_label.py\n{0}/darknet detector train {0}/cfg/voc.data {0}/cfg/yolov3-voc.cfg darknet53.conv.74 -gpus '.format(base_dir)
+print(str)
 
 # 保存网页图片路径
 # urllib.request.urlretrieve('https://upload-images.jianshu.io/upload_images/3980862-5825acffe2b3a3f4.png?imageMogr2/auto-orient/strip|imageView2/2/w/793/format/webp', 'f:/7.jpg')
 
 # 图片地址
-st = int(time.time())
-url = 'https://dss0.baidu.com/73F1bjeh1BF3odCf/it/u=2777493483,1706022420&fm=85&s=3FC2F75FFF4366CE584D2CE403005072'
-html = requests.get(url)
-# 将图片保存到D盘
-with open("/data/home/xuwei/1.jpg","wb")as f:
-    f.write(html.content)
-et = int(time.time())
-print(et - st)
+# st = int(time.time())
+# url = 'https://dss0.baidu.com/73F1bjeh1BF3odCf/it/u=2777493483,1706022420&fm=85&s=3FC2F75FFF4366CE584D2CE403005072'
+# html = requests.get(url)
+# # 将图片保存到D盘
+# with open("/data/home/xuwei/1.jpg","wb")as f:
+#     f.write(html.content)
+# et = int(time.time())
+# print(et - st)
 
 # # 查看内存
 # mem = psutil.virtual_memory()
