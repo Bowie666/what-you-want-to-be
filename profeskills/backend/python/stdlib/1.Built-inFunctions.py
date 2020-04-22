@@ -1,3 +1,59 @@
+"""40 map(function, iterable, ...)   function -- 函数  iterable -- 一个或多个序列
+返回一个将 function 应用于 iterable 中每一项并输出其结果的迭代器。
+如果传入了额外的 iterable 参数，function 必须接受相同个数的实参并被应用于从所有可迭代对象中并行获取的项。
+当有多个可迭代对象时，最短的可迭代对象耗尽则整个迭代就将结束。"""
+# def square(x):  # 计算平方数
+#     return x ** 2
+# print(type(map(square, [1, 2, 3, 4, 5])))  # <class 'map'>计算列表各个元素的平方
+# print([i for i in map(lambda x: x ** 2, [1, 2, 3, 4, 5])])  # [1, 4, 9, 16, 25]使用 lambda 匿名函数
+# # 提供了两个列表，对相同位置的列表数据进行相加<map object at 0x0000000001DBC208>
+# print(map(lambda x, y: x + y, [1, 3, 5, 7, 9], [2, 4, 6, 8, 10]))
+
+
+"""39 locals() 函数会以字典类型返回当前位置的全部局部变量。
+对于函数, 方法, lambda 函式, 类, 以及实现了 __call__ 方法的类实例, 它都返回 True。
+注解 不要更改此字典的内容；更改不会影响解释器使用的局部变量或自由变量的值。"""
+# def runoob(arg):  # 两个局部变量：arg、z
+#     z = 1
+#     print(locals())
+# runoob(4)  # 返回一个名字/值对的字典{'z': 1, 'arg': 4}
+
+"""38 class list([iterable]) 要转换为列表的元组或字符串。方法用于将元组或字符串转换为列表。
+虽然被称为函数，list 实际上是一种可变序列类型，详情请参阅 列表 和 序列类型 — list, tuple, range。"""
+# 不太好整理
+# aTuple = (123, 'Google', 'Runoob', 'Taobao')
+# list1 = list(aTuple)
+# print("列表元素 : ", list1)  # [123, 'Google', 'Runoob', 'Taobao']
+# str = "Hello World"
+# list2 = list(str)
+# print("列表元素 : ", list2)  # ['H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd']
+
+"""37 len(s)
+返回对象的长度（元素个数）。
+实参可以是序列（如 string、bytes、tuple、list 或 range 等）或集合（如 dictionary、set 或 frozen set 等）。"""
+# str = "runoob"
+# print(len(str))  # 6
+# l = [1, 2, 3, 4, 5]
+# print(len(l))  # 5
+
+"""36 iter(object[, sentinel])
+返回一个 iterator 对象。根据是否存在第二个实参，第一个实参的解释是非常不同的。
+如果没有第二个实参，object 必须是支持迭代协议（有 __iter__() 方法）的集合对象，
+或必须支持序列协议（有 __getitem__() 方法，且数字参数从 0 开始）。
+如果它不支持这些协议，会触发 TypeError。
+如果有第二个实参 sentinel，那么 object 必须是可调用的对象。
+这种情况下生成的迭代器，每次迭代调用它的 __next__() 方法时都会不带实参地调用 object；
+如果返回的结果是 sentinel 则触发 StopIteration，否则返回调用结果。"""
+# lst = [1, 2, 3]
+# def test():
+#     return 4
+# for i in iter(lst):  # 竖着打印1 2 3
+#     print(i)
+# # for i in iter(test, ''):  # 不管后面是什么参数这样会一直打印4
+# #     print(i)
+# for i in iter(test):  # TypeError: 'function' object is not iterable
+#     print(i)
+
 """35 issubclass(class, classinfo) class -- 类。classinfo -- 类。
  issubclass() 方法用于判断参数 class 是否是类型参数 classinfo 的子类。
  """
