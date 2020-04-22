@@ -1,3 +1,52 @@
+"""35 issubclass(class, classinfo) class -- 类。classinfo -- 类。
+ issubclass() 方法用于判断参数 class 是否是类型参数 classinfo 的子类。
+ """
+# class A:
+#     pass
+# class B(A):
+#     pass
+# print(issubclass(B, A))  # True
+# print(issubclass(A, B))  # False
+
+"""34 isinstance(object, classinfo)
+isinstance() 函数来判断一个对象是否是一个已知的类型，类似 type()。
+isinstance() 与 type() 区别：
+    type() 不会认为子类是一种父类类型，不考虑继承关系。
+    isinstance() 会认为子类是一种父类类型，考虑继承关系。
+如果要判断两个类型是否相同推荐使用 isinstance()。"""
+# a = 2
+# print(isinstance(a, int))  # True
+# print(isinstance(a, str))  # False
+# print(isinstance(a, (str, int, list)))  # 是元组中的一个返回 True
+# class A:
+#     pass
+# class B(A):
+#     pass
+# print(isinstance(A(), A))  # True
+# print(type(A()) == A)  # True
+# print(isinstance(B(), A))  # True
+# print(type(B()) == A)  # False
+
+"""33 class int(x=0)
+class int(x, base=10)    x -- 字符串或数字。base -- 进制数，默认十进制。
+返回一个使用数字或字符串 x 生成的整数对象，或者没有实参的时候返回 0 。
+如果 x 定义了 __int__()，int(x) 返回 x.__int__() 。
+如果 x 定义了 __trunc__()，它返回 x.__trunc__() 。对于浮点数，它向零舍入。
+如果 x 不是数字，或者有 base 参数，x 必须是字符串、bytes、表示进制为 base 的 整数字面值 的 bytearray 实例。
+该文字前可以有 + 或 - （中间不能有空格），前后可以有空格。
+一个进制为 n 的数字包含 0 到 n-1 的数，其中 a 到 z （或 A 到 Z ）表示 10 到 35。
+默认的 base 为 10 ，允许的进制有 0、2-36。
+2、8、16 进制的数字可以在代码中用 0b/0B 、 0o/0O 、 0x/0X 前缀来表示。
+进制为 0 将安照代码的字面量来精确解释，最后的结果会是 2、8、10、16 进制中的一个。
+所以 int('010', 0) 是非法的，但 int('010') 和 int('010', 8) 是合法的。"""
+# # 说的比较麻烦 但大概就下面几个例子
+# print(int())  # 不传入参数时，得到结果0
+# print(int(3))  # 3
+# print(int(3.6))  # 3
+# print(int('12', 16))  # 18 如果是带参数base的话，12要以字符串的形式进行输入，12 为 16进制
+# print(int('0xa', 16))  # 10
+# print(int('10', 8))  # 8
+
 """32 input([prompt])   接受一个标准输入数据，返回为 string 类型。prompt: 提示信息
 如果存在 prompt 实参，则将其写入标准输出，末尾不带换行符。
 接下来，该函数从输入中读取一行，将其转换为字符串（除了末尾的换行符）并返回。

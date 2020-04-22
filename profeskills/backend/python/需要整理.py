@@ -13,10 +13,199 @@ import psutil
 import time
 import requests
 import os
-base_dir = os.getcwd()
-print(os.getcwd())
-str = 'cp {0}/config.cfg ./\npython voc_label.py\n{0}/darknet detector train {0}/cfg/voc.data {0}/cfg/yolov3-voc.cfg darknet53.conv.74 -gpus '.format(base_dir)
-print(str)
+from xml.dom import minidom
+
+import xml.etree.ElementTree as ET
+
+
+class XmlNode():
+    def __init__(self, x_dom, root):
+        self.diff = 0
+        self.dom = x_dom
+        self.root = root
+
+    def single_node(self, name, text, c_node=None):
+        # root 根节点
+        # name 子节点名称
+        # text 子节点内容
+        # c_node 父节点
+        # 用DOM对象创建元素子节点
+        # 用父节点对象添加元素子节点
+        # 设置该节点内容
+        node = self.dom.createElement(name)
+        if c_node is None:
+            self.root.appendChild(node)
+        else:
+            c_node.appendChild(node)
+        name_text = self.dom.createTextNode(text)
+        node.appendChild(name_text)
+
+    def file_node(self, folder, file_name, path):
+        # 创建folder、filename、path节点
+        # root 根节点
+        # folder 文件夹名
+        # file_name 文件名
+        # path 文件绝对路径
+        self.single_node('folder', folder)
+        self.single_node('filename', file_name)
+        self.single_node('path', path)
+
+    def source_node(self):
+        # 创建source_node节点
+        # root 根节点
+        node = self.dom.createElement('source')
+        self.root.appendChild(node)
+        self.single_node('database', 'Unknown', node)
+
+    def size_node(self, width, height, depth):
+        # 创建size节点
+        # root 根节点
+        # width 图片宽
+        # height 图片高
+        # depth 图片通道
+        node = self.dom.createElement('size')
+        self.root.appendChild(node)
+        self.single_node('width', str(width), node)
+        self.single_node('height', str(height), node)
+        self.single_node('depth', str(depth), node)
+
+    def object_node(self, label, diff, box, score, warn=None):
+        # 创建object节点
+        # root 根节点
+        # lable 类型
+        # diff  困难/简易样本
+        # box 坐标列表
+        # score 预测值
+        # warning 隐患严重等级
+        node = self.dom.createElement('object')
+        self.root.appendChild(node)
+        self.single_node('name', label, node)
+        self.single_node('pose', 'Unspecified', node)
+        self.single_node('truncated', '0', node)
+        self.single_node('difficult', diff, node)
+        if warn is not None:
+            self.single_node('warning', warn, node)
+        else:
+            self.single_node('warning', 'None', node)
+        box_node = self.dom.createElement('bndbox')
+        node.appendChild(box_node)
+        self.single_node('xmin', str(box[0]), box_node)
+        self.single_node('ymin', str(box[1]), box_node)
+        self.single_node('xmax', str(box[2]), box_node)
+        self.single_node('ymax', str(box[3]), box_node)
+        self.single_node('score', str(score), node)
+
+    def fill_text_node(self):
+        root_node = self.dom.documentElement
+        scene = root_node.getElementsByTagName("scene")[0]
+        scene_text_node = scene.childNodes[0]
+        text = scene_text_node.data + '有'
+        objects = root_node.getElementsByTagName("object")
+        for obj in objects:
+            obj_name = obj.getElementsByTagName("name")[0]
+            name_text = obj_name.childNodes[0].data
+            obj_warn = obj.getElementsByTagName("warning")[0]
+            warn_text = obj_warn.childNodes[0].data
+            text = text + warn_text + '预警的' + name_text
+        text_node = root_node.getElementsByTagName("text")[0]
+        text_node.childNodes[0].data = text
+
+    def save(self, path):
+        """
+        :param path: xml 路径
+        :return:
+        """
+        try:
+            with open(path, 'w', encoding='UTF-8') as f:
+                # writexml()
+                # 第一个参数是目标文件对象
+                # 第二个参数是根节点的缩进格式
+                # 第三个参数是其他子节点的缩进格式
+                # 第四个参数制定了换行格式
+                # 第五个参数制定了xml内容的编码。
+                self.dom.writexml(f, indent='', addindent='\t',
+                                  newl='\n', encoding='UTF-8')
+                return path
+        except Exception as err:
+            print('错误信息：{0}'.format(err))
+            return None
+
+
+class XmlParser(object):
+
+    def __init__(self, path):
+        self.tree = ET.parse(path)
+
+    @property
+    def data(self):
+        data = {}
+        data['name'] = self.tree.findall('filename')[0].text
+        data['annotations'] = []
+        obj_list = self.tree.findall('object')
+        for obj in obj_list:
+            frame_data = [float(box.text)
+                          for box in obj.findall('bndbox')[0].getchildren()]
+            data['annotations'].append({
+                'tag': obj.findall('name')[0].text,
+                'frame': {
+                    'x': frame_data[0],
+                    'y': frame_data[1],
+                    'width': frame_data[2] - frame_data[0],
+                    'height': frame_data[3] - frame_data[1]
+                }
+            })
+        return data
+
+def save_xml(image_id):
+    """根据图像 id 生成 xml 文件
+
+    Arguments:
+        image_id {int} -- 图像数据 ID
+
+    Returns:
+        str -- xml 文件路径
+    """
+    image: ImageData = ImageData.query.get(image_id)
+
+    # 创建DOM树对象
+    dom = minidom.Document()
+    root_node = dom.createElement('annotation')
+    dom.appendChild(root_node)
+    xml = XmlNode(dom, root_node)
+
+    # 图像目录路径、文件名、目录名称
+    image_abs_path = os.path.join(STATIC_FOLDER, image.path)
+    image_dir, image_name = os.path.split(image_abs_path)
+    image_folder = image_dir.split('/')[-1]
+
+    # 填充 xml 数据
+    xml.file_node(image_folder, image_name, image_abs_path)
+    xml.single_node('difficult', '0')
+    xml.source_node()
+    xml.size_node(image.width, image.height, image.depth)
+    xml.single_node('segmented', '0')
+    xml.single_node('text', '场景描述节点')
+    xml.single_node('scene', '场景节点')
+    for annotation in image.annotations:
+        box = (
+            int(annotation.pos_x),
+            int(annotation.pos_y),
+            int(annotation.pos_x + annotation.width),
+            int(annotation.pos_y + annotation.height),
+        )
+        xml.object_node(annotation.tag.name, '0', box, annotation.score)
+    xml.fill_text_node()
+
+    return xml.save(os.path.join(STATIC_FOLDER, image.xml_path))
+
+
+
+
+
+# base_dir = os.getcwd()
+# print(os.getcwd())
+# str = 'cp {0}/config.cfg ./\npython voc_label.py\n{0}/darknet detector train {0}/cfg/voc.data {0}/cfg/yolov3-voc.cfg darknet53.conv.74 -gpus '.format(base_dir)
+# print(str)
 
 # 保存网页图片路径
 # urllib.request.urlretrieve('https://upload-images.jianshu.io/upload_images/3980862-5825acffe2b3a3f4.png?imageMogr2/auto-orient/strip|imageView2/2/w/793/format/webp', 'f:/7.jpg')
