@@ -14,192 +14,249 @@ import time
 import requests
 import os
 from xml.dom import minidom
-
+import re
 import xml.etree.ElementTree as ET
 
+# ls1 = [('/data/输电通道隐患检测/2020-04-11/开发测试用数据集12/thumbnails/58761.jpg', 0.7623594999313354),
+#        ('/data/输电通道隐患检测/2020-04-10/开发测试用数据集10/thumbnails/58761.jpg', 0.7623594999313354),
+#        ('/data/输电通道隐患检测/2020-04-14/开发测试用数据集96/thumbnails/58777.jpg', 0.7384615540504456),
+#        ('/data/输电通道隐患检测/2020-04-14/开发测试用数据集85/thumbnails/58777.jpg', 0.7384615540504456),
+#        ('/data/输电通道隐患检测/2020-04-10/开发测试用数据集9/thumbnails/58777.jpg', 0.7384615540504456),
+#        ('/data/输电通道隐患检测/2020-04-14/开发测试用数据集85/thumbnails/58768.jpg', 0.7323359847068787),
+#        ('/data/输电通道隐患检测/2020-04-10/开发测试用数据集9/thumbnails/58768.jpg', 0.7323359847068787),
+#        ('/data/输电通道隐患检测/2020-04-11/开发测试用数据集12/thumbnails/58760.jpg', 0.7090008854866028),
+#        ('/data/输电通道隐患检测/2020-04-10/开发测试用数据集10/thumbnails/58760.jpg', 0.7090008854866028),
+#        ('/data/输电通道隐患检测/2020-04-14/开发测试用数据集85/thumbnails/58775.jpg', 0.7069896459579468),
+#        ('/data/输电通道隐患检测/2020-04-10/开发测试用数据集9/thumbnails/58758.jpg', 0.7014157772064209),
+#        ('/data/输电通道隐患检测/2020-04-11/开发测试用数据集12/thumbnails/58759.jpg', 0.6877801418304443),
+#        ('/data/输电通道隐患检测/2020-04-10/开发测试用数据集10/thumbnails/58759.jpg', 0.6877801418304443),
+#        ('/data/输电通道隐患检测/2020-04-14/开发测试用数据集85/thumbnails/58766.jpg', 0.6479170322418213),
+#        ('/data/输电通道隐患检测/2020-04-15/222/thumbnails/DJI_0085.jpg', 0.6014866232872009),
+#        ('/data/输电通道隐患检测/2020-04-15/6/thumbnails/DJI_0085.jpg', 0.6014866232872009)]
+#
+# # for i in ls1:
+# #        print(i[1])
+# # # ls1.sort([i[1] for i in ls1])
+# # print([i[1] for i in ls1].sort())
+# # print(ls1.sort())
+# # print(sorted(ls1))
+# new_list = []
+# for item in ls1:
+#     new_list.append(item[::-1])
+# print(new_list)
+# print(sorted(new_list, reverse=True)[:1])
 
-class XmlNode():
-    def __init__(self, x_dom, root):
-        self.diff = 0
-        self.dom = x_dom
-        self.root = root
-
-    def single_node(self, name, text, c_node=None):
-        # root 根节点
-        # name 子节点名称
-        # text 子节点内容
-        # c_node 父节点
-        # 用DOM对象创建元素子节点
-        # 用父节点对象添加元素子节点
-        # 设置该节点内容
-        node = self.dom.createElement(name)
-        if c_node is None:
-            self.root.appendChild(node)
-        else:
-            c_node.appendChild(node)
-        name_text = self.dom.createTextNode(text)
-        node.appendChild(name_text)
-
-    def file_node(self, folder, file_name, path):
-        # 创建folder、filename、path节点
-        # root 根节点
-        # folder 文件夹名
-        # file_name 文件名
-        # path 文件绝对路径
-        self.single_node('folder', folder)
-        self.single_node('filename', file_name)
-        self.single_node('path', path)
-
-    def source_node(self):
-        # 创建source_node节点
-        # root 根节点
-        node = self.dom.createElement('source')
-        self.root.appendChild(node)
-        self.single_node('database', 'Unknown', node)
-
-    def size_node(self, width, height, depth):
-        # 创建size节点
-        # root 根节点
-        # width 图片宽
-        # height 图片高
-        # depth 图片通道
-        node = self.dom.createElement('size')
-        self.root.appendChild(node)
-        self.single_node('width', str(width), node)
-        self.single_node('height', str(height), node)
-        self.single_node('depth', str(depth), node)
-
-    def object_node(self, label, diff, box, score, warn=None):
-        # 创建object节点
-        # root 根节点
-        # lable 类型
-        # diff  困难/简易样本
-        # box 坐标列表
-        # score 预测值
-        # warning 隐患严重等级
-        node = self.dom.createElement('object')
-        self.root.appendChild(node)
-        self.single_node('name', label, node)
-        self.single_node('pose', 'Unspecified', node)
-        self.single_node('truncated', '0', node)
-        self.single_node('difficult', diff, node)
-        if warn is not None:
-            self.single_node('warning', warn, node)
-        else:
-            self.single_node('warning', 'None', node)
-        box_node = self.dom.createElement('bndbox')
-        node.appendChild(box_node)
-        self.single_node('xmin', str(box[0]), box_node)
-        self.single_node('ymin', str(box[1]), box_node)
-        self.single_node('xmax', str(box[2]), box_node)
-        self.single_node('ymax', str(box[3]), box_node)
-        self.single_node('score', str(score), node)
-
-    def fill_text_node(self):
-        root_node = self.dom.documentElement
-        scene = root_node.getElementsByTagName("scene")[0]
-        scene_text_node = scene.childNodes[0]
-        text = scene_text_node.data + '有'
-        objects = root_node.getElementsByTagName("object")
-        for obj in objects:
-            obj_name = obj.getElementsByTagName("name")[0]
-            name_text = obj_name.childNodes[0].data
-            obj_warn = obj.getElementsByTagName("warning")[0]
-            warn_text = obj_warn.childNodes[0].data
-            text = text + warn_text + '预警的' + name_text
-        text_node = root_node.getElementsByTagName("text")[0]
-        text_node.childNodes[0].data = text
-
-    def save(self, path):
-        """
-        :param path: xml 路径
-        :return:
-        """
-        try:
-            with open(path, 'w', encoding='UTF-8') as f:
-                # writexml()
-                # 第一个参数是目标文件对象
-                # 第二个参数是根节点的缩进格式
-                # 第三个参数是其他子节点的缩进格式
-                # 第四个参数制定了换行格式
-                # 第五个参数制定了xml内容的编码。
-                self.dom.writexml(f, indent='', addindent='\t',
-                                  newl='\n', encoding='UTF-8')
-                return path
-        except Exception as err:
-            print('错误信息：{0}'.format(err))
-            return None
+with open(r'C:\Users\Administrator\Desktop\dingdign\log.log', 'r', encoding='utf-8') as f:
+       x = f.read()
+       if re.compile(r'Training has finished!'):
+              print(0)
+       pattern = re.compile(r'(?<=Start Epoch )\d+\.?\d*')
+       # for i in f.readlines(-1):
+       #        pattern = re.compile(r'(?<=Start Epoch )\d+\.?\d*')
+       #        pattern.findall(string)
+       #        if re.compile(^Start Epoch$, i):
+       #               j = i.split("Start Epoch")[-1]
+       #               print(re.findall(r'\d', j))
+       #        if pattern.findall(i):
+       print(pattern.findall(x)[-1])
+       # print(pattern.search(x))
+"""import re
 
 
-class XmlParser(object):
+log_file = ''
+log_buff = ''
+with open(log_file, 'r') as f:
+    log_buff = f.read(-1)
 
-    def __init__(self, path):
-        self.tree = ET.parse(path)
+pattern1 = re.compile(r'Total epochs of the training set is: \d+')
+total_epoch = int(re.compile(r'\d+').findall(pattern1.findall(log_buff)[0])[0])
 
-    @property
-    def data(self):
-        data = {}
-        data['name'] = self.tree.findall('filename')[0].text
-        data['annotations'] = []
-        obj_list = self.tree.findall('object')
-        for obj in obj_list:
-            frame_data = [float(box.text)
-                          for box in obj.findall('bndbox')[0].getchildren()]
-            data['annotations'].append({
-                'tag': obj.findall('name')[0].text,
-                'frame': {
-                    'x': frame_data[0],
-                    'y': frame_data[1],
-                    'width': frame_data[2] - frame_data[0],
-                    'height': frame_data[3] - frame_data[1]
-                }
-            })
-        return data
+pattern2 = re.compile(r'Start Epoch \d+ ...')
+now_epoch = int(re.compile(r'\d+').findall(pattern1.findall(log_buff)[-1])[0])
 
-def save_xml(image_id):
-    """根据图像 id 生成 xml 文件
+print(total_epoch, now_epoch)"""
 
-    Arguments:
-        image_id {int} -- 图像数据 ID
-
-    Returns:
-        str -- xml 文件路径
-    """
-    image: ImageData = ImageData.query.get(image_id)
-
-    # 创建DOM树对象
-    dom = minidom.Document()
-    root_node = dom.createElement('annotation')
-    dom.appendChild(root_node)
-    xml = XmlNode(dom, root_node)
-
-    # 图像目录路径、文件名、目录名称
-    image_abs_path = os.path.join(STATIC_FOLDER, image.path)
-    image_dir, image_name = os.path.split(image_abs_path)
-    image_folder = image_dir.split('/')[-1]
-
-    # 填充 xml 数据
-    xml.file_node(image_folder, image_name, image_abs_path)
-    xml.single_node('difficult', '0')
-    xml.source_node()
-    xml.size_node(image.width, image.height, image.depth)
-    xml.single_node('segmented', '0')
-    xml.single_node('text', '场景描述节点')
-    xml.single_node('scene', '场景节点')
-    for annotation in image.annotations:
-        box = (
-            int(annotation.pos_x),
-            int(annotation.pos_y),
-            int(annotation.pos_x + annotation.width),
-            int(annotation.pos_y + annotation.height),
-        )
-        xml.object_node(annotation.tag.name, '0', box, annotation.score)
-    xml.fill_text_node()
-
-    return xml.save(os.path.join(STATIC_FOLDER, image.xml_path))
-
-
-
+if not os.path.exists("f:/666"):
+       os.mkdir("f:/666")
+# class XmlNode():
+#     def __init__(self, x_dom, root):
+#         self.diff = 0
+#         self.dom = x_dom
+#         self.root = root
+#
+#     def single_node(self, name, text, c_node=None):
+#         # root 根节点
+#         # name 子节点名称
+#         # text 子节点内容
+#         # c_node 父节点
+#         # 用DOM对象创建元素子节点
+#         # 用父节点对象添加元素子节点
+#         # 设置该节点内容
+#         node = self.dom.createElement(name)
+#         if c_node is None:
+#             self.root.appendChild(node)
+#         else:
+#             c_node.appendChild(node)
+#         name_text = self.dom.createTextNode(text)
+#         node.appendChild(name_text)
+#
+#     def file_node(self, folder, file_name, path):
+#         # 创建folder、filename、path节点
+#         # root 根节点
+#         # folder 文件夹名
+#         # file_name 文件名
+#         # path 文件绝对路径
+#         self.single_node('folder', folder)
+#         self.single_node('filename', file_name)
+#         self.single_node('path', path)
+#
+#     def source_node(self):
+#         # 创建source_node节点
+#         # root 根节点
+#         node = self.dom.createElement('source')
+#         self.root.appendChild(node)
+#         self.single_node('database', 'Unknown', node)
+#
+#     def size_node(self, width, height, depth):
+#         # 创建size节点
+#         # root 根节点
+#         # width 图片宽
+#         # height 图片高
+#         # depth 图片通道
+#         node = self.dom.createElement('size')
+#         self.root.appendChild(node)
+#         self.single_node('width', str(width), node)
+#         self.single_node('height', str(height), node)
+#         self.single_node('depth', str(depth), node)
+#
+#     def object_node(self, label, diff, box, score, warn=None):
+#         # 创建object节点
+#         # root 根节点
+#         # lable 类型
+#         # diff  困难/简易样本
+#         # box 坐标列表
+#         # score 预测值
+#         # warning 隐患严重等级
+#         node = self.dom.createElement('object')
+#         self.root.appendChild(node)
+#         self.single_node('name', label, node)
+#         self.single_node('pose', 'Unspecified', node)
+#         self.single_node('truncated', '0', node)
+#         self.single_node('difficult', diff, node)
+#         if warn is not None:
+#             self.single_node('warning', warn, node)
+#         else:
+#             self.single_node('warning', 'None', node)
+#         box_node = self.dom.createElement('bndbox')
+#         node.appendChild(box_node)
+#         self.single_node('xmin', str(box[0]), box_node)
+#         self.single_node('ymin', str(box[1]), box_node)
+#         self.single_node('xmax', str(box[2]), box_node)
+#         self.single_node('ymax', str(box[3]), box_node)
+#         self.single_node('score', str(score), node)
+#
+#     def fill_text_node(self):
+#         root_node = self.dom.documentElement
+#         scene = root_node.getElementsByTagName("scene")[0]
+#         scene_text_node = scene.childNodes[0]
+#         text = scene_text_node.data + '有'
+#         objects = root_node.getElementsByTagName("object")
+#         for obj in objects:
+#             obj_name = obj.getElementsByTagName("name")[0]
+#             name_text = obj_name.childNodes[0].data
+#             obj_warn = obj.getElementsByTagName("warning")[0]
+#             warn_text = obj_warn.childNodes[0].data
+#             text = text + warn_text + '预警的' + name_text
+#         text_node = root_node.getElementsByTagName("text")[0]
+#         text_node.childNodes[0].data = text
+#
+#     def save(self, path):
+#         """
+#         :param path: xml 路径
+#         :return:
+#         """
+#         try:
+#             with open(path, 'w', encoding='UTF-8') as f:
+#                 # writexml()
+#                 # 第一个参数是目标文件对象
+#                 # 第二个参数是根节点的缩进格式
+#                 # 第三个参数是其他子节点的缩进格式
+#                 # 第四个参数制定了换行格式
+#                 # 第五个参数制定了xml内容的编码。
+#                 self.dom.writexml(f, indent='', addindent='\t',
+#                                   newl='\n', encoding='UTF-8')
+#                 return path
+#         except Exception as err:
+#             print('错误信息：{0}'.format(err))
+#             return None
+#
+#
+# class XmlParser(object):
+#
+#     def __init__(self, path):
+#         self.tree = ET.parse(path)
+#
+#     @property
+#     def data(self):
+#         data = {}
+#         data['name'] = self.tree.findall('filename')[0].text
+#         data['annotations'] = []
+#         obj_list = self.tree.findall('object')
+#         for obj in obj_list:
+#             frame_data = [float(box.text)
+#                           for box in obj.findall('bndbox')[0].getchildren()]
+#             data['annotations'].append({
+#                 'tag': obj.findall('name')[0].text,
+#                 'frame': {
+#                     'x': frame_data[0],
+#                     'y': frame_data[1],
+#                     'width': frame_data[2] - frame_data[0],
+#                     'height': frame_data[3] - frame_data[1]
+#                 }
+#             })
+#         return data
+#
+# def save_xml(image_id):
+#     """根据图像 id 生成 xml 文件
+#
+#     Arguments:
+#         image_id {int} -- 图像数据 ID
+#
+#     Returns:
+#         str -- xml 文件路径
+#     """
+#     image: ImageData = ImageData.query.get(image_id)
+#
+#     # 创建DOM树对象
+#     dom = minidom.Document()
+#     root_node = dom.createElement('annotation')
+#     dom.appendChild(root_node)
+#     xml = XmlNode(dom, root_node)
+#
+#     # 图像目录路径、文件名、目录名称
+#     image_abs_path = os.path.join(STATIC_FOLDER, image.path)
+#     image_dir, image_name = os.path.split(image_abs_path)
+#     image_folder = image_dir.split('/')[-1]
+#
+#     # 填充 xml 数据
+#     xml.file_node(image_folder, image_name, image_abs_path)
+#     xml.single_node('difficult', '0')
+#     xml.source_node()
+#     xml.size_node(image.width, image.height, image.depth)
+#     xml.single_node('segmented', '0')
+#     xml.single_node('text', '场景描述节点')
+#     xml.single_node('scene', '场景节点')
+#     for annotation in image.annotations:
+#         box = (
+#             int(annotation.pos_x),
+#             int(annotation.pos_y),
+#             int(annotation.pos_x + annotation.width),
+#             int(annotation.pos_y + annotation.height),
+#         )
+#         xml.object_node(annotation.tag.name, '0', box, annotation.score)
+#     xml.fill_text_node()
+#
+#     return xml.save(os.path.join(STATIC_FOLDER, image.xml_path))
 
 
 # base_dir = os.getcwd()
