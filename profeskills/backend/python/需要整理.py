@@ -48,7 +48,7 @@ import xml.etree.ElementTree as ET
 
 with open(r'C:\Users\Administrator\Desktop\dingdign\log.log', 'r', encoding='utf-8') as f:
        x = f.read()
-       if re.compile(r'Training has finished!'):
+       if  len(re.findall(r'Training has finished!', x)) :
               print(0)
        pattern = re.compile(r'(?<=Start Epoch )\d+\.?\d*')
        # for i in f.readlines(-1):
