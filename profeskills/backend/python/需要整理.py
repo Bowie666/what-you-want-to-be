@@ -16,7 +16,7 @@ import os
 from xml.dom import minidom
 import re
 import xml.etree.ElementTree as ET
-
+import subprocess
 # ls1 = [('/data/输电通道隐患检测/2020-04-11/开发测试用数据集12/thumbnails/58761.jpg', 0.7623594999313354),
 #        ('/data/输电通道隐患检测/2020-04-10/开发测试用数据集10/thumbnails/58761.jpg', 0.7623594999313354),
 #        ('/data/输电通道隐患检测/2020-04-14/开发测试用数据集96/thumbnails/58777.jpg', 0.7384615540504456),
@@ -45,21 +45,28 @@ import xml.etree.ElementTree as ET
 #     new_list.append(item[::-1])
 # print(new_list)
 # print(sorted(new_list, reverse=True)[:1])
-
-with open(r'C:\Users\Administrator\Desktop\dingdign\log.log', 'r', encoding='utf-8') as f:
-       x = f.read()
-       if  len(re.findall(r'Training has finished!', x)) :
-              print(0)
-       pattern = re.compile(r'(?<=Start Epoch )\d+\.?\d*')
-       # for i in f.readlines(-1):
-       #        pattern = re.compile(r'(?<=Start Epoch )\d+\.?\d*')
-       #        pattern.findall(string)
-       #        if re.compile(^Start Epoch$, i):
-       #               j = i.split("Start Epoch")[-1]
-       #               print(re.findall(r'\d', j))
-       #        if pattern.findall(i):
-       print(pattern.findall(x)[-1])
-       # print(pattern.search(x))
+res = subprocess.check_output('ls .', shell=True)
+# pid = ['COMMAND     PID  USER   FD   TYPE    DEVICE SIZE/OFF NODE NAME\n', 'tensorboa 45189 xuwei    3u  IPv4 136244799      0t0  TCP *:8010 (LISTEN)\n']
+# print(pid[1])
+# print(pid[1].split(' '))
+# print(pid[1].split(' ')[1])
+# print(type(pid[1].split(' ')[1]))
+# print(type(int(pid[1].split(' ')[1])))
+# os.system('C:\\Users\\Administrator\\Desktop\\look')
+# with open(r'C:\Users\Administrator\Desktop\dingdign\log.log', 'r', encoding='utf-8') as f:
+#     x = f.read()
+#     if len(re.findall(r'Training has finished!', x)):
+#         print(0)
+#     pattern = re.compile(r'(?<=Start Epoch )\d+\.?\d*')
+#     # for i in f.readlines(-1):
+#     #        pattern = re.compile(r'(?<=Start Epoch )\d+\.?\d*')
+#     #        pattern.findall(string)
+#     #        if re.compile(^Start Epoch$, i):
+#     #               j = i.split("Start Epoch")[-1]
+#     #               print(re.findall(r'\d', j))
+#     #        if pattern.findall(i):
+#     print(pattern.findall(x)[-1])
+#     # print(pattern.search(x))
 """import re
 
 
@@ -77,7 +84,7 @@ now_epoch = int(re.compile(r'\d+').findall(pattern1.findall(log_buff)[-1])[0])
 print(total_epoch, now_epoch)"""
 
 if not os.path.exists("f:/666"):
-       os.mkdir("f:/666")
+    os.mkdir("f:/666")
 # class XmlNode():
 #     def __init__(self, x_dom, root):
 #         self.diff = 0
