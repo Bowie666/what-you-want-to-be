@@ -1,3 +1,215 @@
+"""51 class property(fget=None, fset=None, fdel=None, doc=None)  过会好好看看
+返回 property 属性。
+fget 是获取属性值的函数。
+fset 是用于设置属性值的函数。
+fdel 是用于删除属性值的函数。
+并且 doc 为属性对象创建文档字符串。
+一个典型的用法是定义一个托管属性 x:"""
+# class C:
+#     def __init__(self):
+#         self._x = None
+#     def getx(self):
+#         return self._x
+#     def setx(self, value):
+#         self._x = value
+#     def delx(self):
+#         del self._x
+#     x = property(getx, setx, delx, "I'm the 'x' property.")
+# c = C()
+# print(c.x)  # None
+# c.x = 'baae'
+# del c.x
+
+"""50 print(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)
+将 objects 打印到 file 指定的文本流，以 sep 分隔并在末尾加上 end。 sep, end, file 和 flush 如果存在，它们必须以关键字参数的形式给出。
+所有非关键字参数都会被转换为字符串，就像是执行了 str() 一样，并会被写入到流，以 sep 且在末尾加上 end。
+sep 和 end 都必须为字符串；它们也可以为 None，这意味着使用默认值。 如果没有给出 objects，则 print() 将只写入 end。
+file 参数必须是一个具有 write(string) 方法的对象；如果参数不存在或为 None，则将使用 sys.stdout。
+由于要打印的参数会被转换为文本字符串，因此 print() 不能用于二进制模式的文件对象。 对于这些对象，应改用 file.write(...)。
+输出是否被缓存通常决定于 file，但如果 flush 关键字参数为真值，流会被强制刷新。
+objects -- 复数，表示可以一次输出多个对象。输出多个对象时，需要用 , 分隔。
+sep -- 用来间隔多个对象，默认值是一个空格。
+end -- 用来设定以什么结尾。默认值是换行符 \n，我们可以换成其他字符串。
+file -- 要写入的文件对象。
+flush -- 输出是否被缓存通常决定于 file，但如果 flush 关键字参数为 True，流会被强制刷新。"""
+# print("aaa""bbb")  # aaabbb
+# print("aaa", "bbb")  # aaa bbb
+# print("www", "runoob", "com", sep=".")  # 设置间隔符www.runoob.com
+# import time
+# print("---RUNOOB EXAMPLE ： Loading 效果---")
+# print("Loading", end="")
+# for i in range(20):
+#     print(".", end='', flush=True)
+#     time.sleep(0.5)
+
+"""49 pow(x, y[, z])
+返回 x 的 y 次幂；如果 z 存在，则对 z 取余（比直接 pow(x, y) % z 计算更高效）。
+两个参数形式的 pow(x, y) 等价于幂运算符： x**y。
+参数必须为数值类型。 对于混用的操作数类型，则适用二元算术运算符的类型强制转换规则。
+对于 int 操作数，结果具有与操作数相同的类型（转换后），除非第二个参数为负值；
+在这种情况下，所有参数将被转换为浮点数并输出浮点数结果。 例如，10**2 返回 100，但 10**-2 返回 0.01。
+如果第二个参数为负值，则第三个参数必须省略。 如果存在 z，则 x 和 y 必须为整数类型，且 y 必须为非负数。"""
+# print(pow(2, 3))  # 8
+# print(type(pow(2, 3, 5)))  # <class 'int'>
+# print(pow(2, 3, 5))  # 3
+# # 下面是测试y值为负数，第三个数不能填写
+# print(pow(2, -1))  # 0.5
+# # print(pow(2, -1, 3))  # ValueError: pow() 2nd argument cannot be negative when 3rd argument specified
+
+"""48 ord(c)
+对表示单个 Unicode 字符的字符串，返回代表它 Unicode 码点的整数。
+例如 ord('a') 返回整数 97， ord('€') （欧元符号）返回 8364 。这是 chr() 的逆函数。"""
+# print(ord('a'))  # 97
+# print(ord('€'))  # 8364
+
+"""47 open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)
+打开 file 并返回对应的 file object。如果该文件不能打开，则触发 OSError。
+file 是一个 path-like object，表示将要打开的文件的路径（绝对路径或者当前工作目录的相对路径），也可以是要被封装的整数类型文件描述符。
+（如果是文件描述符，它会随着返回的 I/O 对象关闭而关闭，除非 closefd 被设为 False 。）
+mode 是一个可选字符串，用于指定打开文件的模式。默认值是 'r' ，这意味着它以文本模式打开并读取。
+其他常见模式有：写入 'w' （截断已经存在的文件）；排它性创建 'x' ；
+追加写 'a' （在 一些 Unix 系统上，无论当前的文件指针在什么位置，所有 写入都会追加到文件末尾）。
+在文本模式，如果 encoding 没有指定，则根据平台来决定使用的编码：使用 locale.getpreferredencoding(False) 来获取本地编码。
+（要读取和写入原始字节，请使用二进制模式并不要指定 encoding。）可用的模式有：
+
+字符 含义
+
+'r' 读取（默认）
+
+'w' 写入，并先截断文件
+
+'x' 排它性创建，如果文件已存在则失败
+
+'a' 写入，如果文件存在则在末尾追加
+
+'b' 二进制模式
+
+'t' 文本模式（默认）
+
+'+' 更新磁盘文件（读取并写入）
+
+'U' universal newlines mode (deprecated)
+
+默认的模式是 'r' （打开并读取文本，同 'rt' ）。对于二进制写入， 'w+b' 模式打开并把文件截断成 0 字节； 'r+b' 则不会截断。
+
+正如在 概述 中提到的，Python区分二进制和文本I/O。以二进制模式打开的文件（包括 mode 参数中的 'b' ）返回的内容为 bytes`对象，不进行任何解码。
+在文本模式下（默认情况下，或者在 *mode* 参数中包含 `’t’` ）时，文件内容返回为 str ，首先使用指定的 encoding （如果给定）或者使用平台默认的的字节编码解码。
+
+注解 Python不依赖于底层操作系统的文本文件概念;所有处理都由Python本身完成，因此与平台无关。
+buffering 是一个可选的整数，用于设置缓冲策略。
+传递0以切换缓冲关闭（仅允许在二进制模式下），1选择行缓冲（仅在文本模式下可用），并且>1的整数以指示固定大小的块缓冲区的大小（以字节为单位）。
+如果没有给出 buffering 参数，则默认缓冲策略的工作方式如下:
+
+二进制文件以固定大小的块进行缓冲；
+使用启发式方法选择缓冲区的大小，尝试确定底层设备的“块大小”或使用 io.DEFAULT_BUFFER_SIZE。
+在许多系统上，缓冲区的长度通常为4096或8192字节。
+
+“交互式”文本文件（ isatty() 返回 True 的文件）使用行缓冲。
+其他文本文件使用上述策略用于二进制文件。
+
+encoding 是用于解码或编码文件的编码的名称。
+这应该只在文本模式下使用。默认编码是依赖于平台的（不 管 locale.getpreferredencoding() 返回何值），但可以使用任何Python支持的 text encoding 。
+有关支持的编码列表，请参阅 codecs 模块。
+
+errors 是一个可选的字符串参数，用于指定如何处理编码和解码错误 - 这不能在二进制模式下使用。
+可以使用各种标准错误处理程序（列在 错误处理方案 ），但是使用 codecs.register_error() 注册的任何错误处理名称也是有效的。
+标准名称包括:
+
+如果存在编码错误，'strict' 会引发 ValueError 异常。 默认值 None 具有相同的效果。
+
+'ignore' 忽略错误。请注意，忽略编码错误可能会导致数据丢失。
+
+'replace' 会将替换标记（例如 '?' ）插入有错误数据的地方。
+
+'surrogateescape' 将表示任何不正确的字节作为Unicode专用区中的代码点，范围从U+DC80到U+DCFF。
+当在写入数据时使用 surrogateescape 错误处理程序时，这些私有代码点将被转回到相同的字节中。这对于处理未知编码的文件很有用。
+
+只有在写入文件时才支持 'xmlcharrefreplace'。编码不支持的字符将替换为相应的XML字符引用 &#nnn;。
+
+'backslashreplace' 用Python的反向转义序列替换格式错误的数据。
+
+'namereplace' （也只在编写时支持）用 \\N{...} 转义序列替换不支持的字符。
+
+newline 控制 universal newlines 模式如何生效（它仅适用于文本模式）。
+它可以是 None，''，'\\n'，'\\r' 和 '\\r\n'。它的工作原理:
+
+从流中读取输入时，如果 newline 为 None，则启用通用换行模式。
+输入中的行可以以 '\\n'，'\\r' 或 '\\r\n' 结尾，这些行被翻译成 '\\n' 在返回呼叫者之前。
+如果它是 ''，则启用通用换行模式，但行结尾将返回给调用者未翻译。
+如果它具有任何其他合法值，则输入行仅由给定字符串终止，并且行结尾将返回给未调用的调用者。
+
+将输出写入流时，如果 newline 为 None，则写入的任何 '\\n' 字符都将转换为系统默认行分隔符 os.linesep。
+如果 newline 是 '' 或 '\\n'，则不进行翻译。如果 newline 是任何其他合法值，则写入的任何 '\\n' 字符将被转换为给定的字符串。
+
+如果 closefd 是 False 并且给出了文件描述符而不是文件名，那么当文件关闭时，底层文件描述符将保持打开状态。
+如果给出文件名则 closefd 必须为 True （默认值），否则将引发错误。
+
+可以通过传递可调用的 opener 来使用自定义开启器。
+然后通过使用参数（ file，flags ）调用 opener 获得文件对象的基础文件描述符。 
+opener 必须返回一个打开的文件描述符（使用 os.open as opener 时与传递 None 的效果相同）。
+新创建的文件是 不可继承的。"""
+
+"""46 oct(x)
+将一个整数转变为一个前缀为“0o”的八进制字符串。结果是一个合法的 Python 表达式。
+如果 x 不是 Python 的 int 对象，那它需要定义 __index__() 方法返回一个整数。"""
+# print(oct(8))  # 0o10
+# print(oct(-56))  # -0o70
+# # 如果要将整数转换为八进制字符串，并可选择有无“0o”前缀
+# print(format(10, '#o'))  # 0o12
+# print(format(10, 'o'))  # 12
+# print(f'{10:#o}')  # 0o12
+# print(f'{10:o}')  # 12
+# print('%#o' % 10)  # 0o12
+# print('%o' % 10)  # 12
+# print(type('%#o' % 10))  # <class 'str'>
+# print(type('%o' % 10))  # <class 'str'>
+
+"""45 class object
+返回一个没有特征的新对象。object 是所有类的基类。它具有所有 Python 类实例的通用方法。这个函数不接受任何实参。
+注解 由于 object 没有 __dict__，因此无法将任意属性赋给 object 的实例。"""
+# 这个东西没有任何特征
+
+"""44 next(iterator[, default])
+通过调用 iterator 的 __next__() 方法获取下一个元素。
+如果迭代器耗尽，则返回给定的 default，如果没有默认值则触发 StopIteration。"""
+# it = iter([1, 2, 3, 4, 5])
+# print(next(it))  # 1
+# # while True:
+# #     print(next(it))  # 这种会报错
+# while True:
+#     try:
+#         # 获得下一个值:
+#         x = next(it)
+#         print(x)
+#     except StopIteration:
+#         # 遇到StopIteration就退出循环
+#         break
+
+"""43 min(iterable, *[, key, default]) 返回给定参数的最小值。这个和max类似
+min(arg1, arg2, *args[, key])
+返回可迭代对象中最小的元素，或者返回两个及以上实参中最小的。
+如果只提供了一个位置参数，它必须是 iterable，返回可迭代对象中最小的元素；
+如果提供了两个及以上的位置参数，则返回最小的位置参数。
+有两个可选只能用关键字的实参。key 实参指定排序函数用的参数，如传给 list.sort() 的。
+default 实参是当可迭代对象为空时返回的值。如果可迭代对象为空，并且没有给 default ，则会触发 ValueError。
+如果有多个最小元素，则此函数将返回第一个找到的。
+这和其他稳定排序工具如 sorted(iterable, key=keyfunc)[0] 和 heapq.nsmallest(1, iterable, key=keyfunc) 保持一致。"""
+# print(min(80, 100, 1000))  # 80
+# print(min(-20, 100, 400))  # -20
+# print(min(-80, -20, -10))  # -80
+# print(min(0, 100, -400))  # -400
+
+"""42 memoryview(obj) 不太懂
+返回由给定实参创建的“内存视图”对象
+函数返回给定参数的内存查看对象(Momory view)。
+所谓内存查看对象，是指对支持缓冲区协议的数据进行包装，在不需要复制对象基础上允许Python代码访问"""
+# # v = memoryview('abcefg')
+# # print(v[2])  # TypeError: memoryview: a bytes-like object is required, not 'str'
+# g = memoryview('abcefg'.encode())
+# print(g[2])  # 99
+# a = memoryview(bytearray('abcefg', encoding='utf-8'))
+# print(a[2])  # 99
+
 """41 max(iterable, *[, key, default])
 max(arg1, arg2, *args[, key])
 返回可迭代对象中最大的元素，或者返回两个及以上实参中最大的。
