@@ -1,3 +1,47 @@
+"""57 setattr(object, name, value)
+此函数与 getattr() 两相对应。 其参数为一个对象、一个字符串和一个任意值。
+字符串指定一个现有属性或者新增属性。 函数会将值赋给该属性，只要对象允许这种操作。
+例如，setattr(x, 'foobar', 123) 等价于 x.foobar = 123。
+object -- 对象。
+name -- 字符串，对象属性。
+value -- 属性值。"""
+# class A(object):
+#     bar = 1
+# a = A()
+# getattr(a, 'bar')  # 获取属性 bar 值
+# setattr(a, 'bar', 5)  # 设置属性 bar 值
+# print(a.bar)  # 5
+# # 如果属性不存在会创建一个新的对象属性，并对属性赋值：
+# setattr(a, "age", 28)
+# print(a.age)  # 28
+
+"""56 class set([iterable])
+返回一个新的 set 对象，可以选择带有从 iterable 获取的元素。 set 是一个内置类型。 """
+# x = set('runoob')
+# y = set('google')
+# print(x)  # {'u', 'n', 'b', 'o', 'r'}
+# print(type(x))  # <class 'set'>
+# print(y)  # {'e', 'o', 'l', 'g'}
+# print(x & y)  # 交集#{'o'}
+# print(x | y)  # 并集#{'u', 'o', 'b', 'e', 'r', 'g', 'n', 'l'}
+# print(x - y)  # 差集#{'u', 'n', 'r', 'b'}
+# print(type(x - y))  # <class 'set'>
+
+"""55 round(number[, ndigits])
+返回 number 舍入到小数点后 ndigits 位精度的值。 如果 ndigits 被省略或为 None，则返回最接近输入值的整数。
+对于支持 round() 的内置类型，值会被舍入到最接近的 10 的负 ndigits 次幂的倍数；
+如果与两个倍数的距离相等，则选择偶数 (因此，round(0.5) 和 round(-0.5) 均为 0 而 round(1.5) 为 2)。
+任何整数值都可作为有效的 ndigits (正数、零或负数)。 如果 ndigits 被省略或为 None 则返回值将为整数。
+否则返回值与 number 的类型相同。
+对于一般的 Python 对象 number, round 将委托给 number.__round__。
+x -- 数字表达式。
+n -- 表示从小数点位数，其中 x 需要四舍五入，默认值为 0。"""
+# print(round(70.23456))  # 70
+# print(round(56.659, 1))  # 56.7
+# print(round(80.264, 2))  # 80.26
+# print(round(100.000056, 3))  # 100.0
+# print(round(-100.000056, 3))  # -100.0
+
 """54 reversed(seq)
 返回一个反向的 iterator。 seq 必须是一个具有 __reversed__() 方法的对象或者是支持该序列协议
 （具有从 0 开始的整数类型参数的 __len__() 方法和 __getitem__() 方法）。
