@@ -1,3 +1,42 @@
+"""54 reversed(seq)
+返回一个反向的 iterator。 seq 必须是一个具有 __reversed__() 方法的对象或者是支持该序列协议
+（具有从 0 开始的整数类型参数的 __len__() 方法和 __getitem__() 方法）。
+seq -- 要转换的序列，可以是 tuple, string, list 或 range。"""
+# # 字符串
+# seqString = 'Runoob'
+# print(list(reversed(seqString)))  # ['b', 'o', 'o', 'n', 'u', 'R']
+# # 元组
+# seqTuple = ('R', 'u', 'n', 'o', 'o', 'b')
+# print(list(reversed(seqTuple)))  # ['b', 'o', 'o', 'n', 'u', 'R']
+# # range
+# seqRange = range(5, 9)
+# print(list(reversed(seqRange)))  # [8, 7, 6, 5]
+# # 列表
+# seqList = [1, 2, 4, 3, 5]
+# print(list(reversed(seqList)))  # [5, 3, 4, 2, 1]
+
+"""53 repr(object)
+返回包含一个对象的可打印表示形式的字符串。
+对于许多类型来说，该函数会尝试返回的字符串将会与该对象被传递给 eval() 时所生成的对象具有相同的值，
+在其他情况下表示形式会是一个括在尖括号中的字符串，其中包含对象类型的名称与通常包括对象名称和地址的附加信息。
+类可以通过定义 __repr__() 方法来控制此函数为它的实例所返回的内容。"""
+# s = 'RUNOOB'
+# print(repr(s))  # 'RUNOOB'
+# print(type(repr(s)))  # <class 'str'>
+# dict = {'runoob': 'runoob.com', 'google': 'google.com'}
+# print(repr(dict))  # {'runoob': 'runoob.com', 'google': 'google.com'}
+# print(type(repr(dict)))  # <class 'str'>
+
+"""52 range(stop)  返回的是一个可迭代对象（类型是对象）
+range(start, stop[, step])
+虽然被称为函数，但 range 实际上是一个不可变的序列类型
+start: 计数从 start 开始。默认是从 0 开始。例如range（5）等价于range（0， 5）;
+stop: 计数到 stop 结束，但不包括 stop。例如：range（0， 5） 是[0, 1, 2, 3, 4]没有5
+step：步长，默认为1。例如：range（0， 5） 等价于 range(0, 5, 1)"""
+# print(range(0, 30))  # range(0, 30)
+# print(range(0, 30, 5))  # range(0, 30, 5)
+# print(list(range(3)))  # [0, 1, 2]
+
 """51 class property(fget=None, fset=None, fdel=None, doc=None)  过会好好看看
 返回 property 属性。
 fget 是获取属性值的函数。
