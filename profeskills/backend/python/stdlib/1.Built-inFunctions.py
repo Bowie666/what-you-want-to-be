@@ -1,3 +1,28 @@
+"""59 sorted(iterable, *, key=None, reverse=False)
+根据 iterable 中的项返回一个新的已排序列表。
+具有两个可选参数，它们都必须指定为关键字参数。
+key 指定带有单个参数的函数，用于从 iterable 的每个元素中提取用于比较的键 (例如 key=str.lower)。 默认值为 None (直接比较元素)。
+reverse 为一个布尔值。 如果设为 True，则每个列表元素将按反向顺序比较进行排序。"""
+# print(sorted([5, 2, 3, 1, 4]))  # [1, 2, 3, 4, 5]
+# example_list = [5, 0, 6, 1, 2, 7, 3, 4]
+# print(sorted(example_list, key=lambda x: x * -1))  # [7, 6, 5, 4, 3, 2, 1, 0]
+# print(sorted({1: 'D', 2: 'B', 3: 'B', 4: 'E', 5: 'A'}))  # [1, 2, 3, 4, 5]
+# print(sorted({'D': 1, 'B': 2, 'C': 3, 'E': 4, 'A': 5}))  # [1, 2, 3, 4, 5]
+# print(sorted({'D': 1, 'B': 2, 'C': 3, 'E': 4, 'A': 5}))  # ['A', 'B', 'C', 'D', 'E']
+
+"""58 class slice(stop) 返回一个切片对象。
+class slice(start, stop[, step])
+返回一个表示由 range(start, stop, step) 所指定索引集的 slice 对象。 其中 start 和 step 参数默认为 None。
+切片对象具有仅会返回对应参数值（或其默认值）的只读数据属性 start, stop 和 step。
+它们没有其他的显式功能；不过它们会被 NumPy 以及其他第三方扩展所使用。
+切片对象也会在使用扩展索引语法时被生成。"""
+# myslice = slice(5)  # 设置截取5个元素的切片
+# itslice = slice(0, 10, 2)
+# arr = range(10)
+# print(arr[myslice])  # 截取 5 个元素range(0, 5)
+# print(arr[itslice])  # range(0, 10, 2)
+# print(type(arr[itslice]))  # <class 'range'>
+
 """57 setattr(object, name, value)
 此函数与 getattr() 两相对应。 其参数为一个对象、一个字符串和一个任意值。
 字符串指定一个现有属性或者新增属性。 函数会将值赋给该属性，只要对象允许这种操作。
