@@ -17,6 +17,37 @@ from xml.dom import minidom
 import re
 import xml.etree.ElementTree as ET
 import subprocess
+log_dir = 'ss'
+b = 'tensorboard --logdir={} --port=8010 --host=0.0.0.0'.format(log_dir)
+print(b)
+# log_path = os.path.join('vislogpath', 'log.log')
+# print(log_path)
+# print(time.localtime(time.time()))
+# localtime = time.localtime(time.time())
+# nowt = str(localtime.tm_year) + str(localtime.tm_mon) + str(localtime.tm_mday)
+# print(nowt)
+# bdir = '/home/xuwei/data/train/'
+# print(str(time.time()))
+# iu = str(int(time.time()))
+# localtime = time.localtime(time.time())
+# nowt = str(localtime.tm_year) + str(localtime.tm_mon) + str(localtime.tm_mday) + str(localtime.tm_hour)
+# # datadir = bdir + "algo" + "/" + nowt + "/data/train_imgs/"
+# # s = datadir.replace('train_imgs', 'train_anns')
+# # a = datadir.replace('train_imgs', 'eval_anns')
+# # d = datadir.replace('train_imgs', 'eval_imgs')
+# # data = datadir.replace('data/train_imgs', 'vislog')
+# datadir = bdir + 'algo' + "/" + nowt + iu + "/imgdata/"
+#
+# train_imgs = datadir + "train_imgs/"
+# train_anns = datadir + 'train_anns/'
+# eval_anns = datadir + 'eval_anns/'
+# eval_imgs = datadir + 'eval_imgs/'
+# vislog = datadir.replace('imgdata', 'vislog')
+# print(train_imgs)
+# print(train_anns)
+# print(eval_anns)
+# print(eval_imgs)
+# print(vislog)
 # ls1 = [('/data/输电通道隐患检测/2020-04-11/开发测试用数据集12/thumbnails/58761.jpg', 0.7623594999313354),
 #        ('/data/输电通道隐患检测/2020-04-10/开发测试用数据集10/thumbnails/58761.jpg', 0.7623594999313354),
 #        ('/data/输电通道隐患检测/2020-04-14/开发测试用数据集96/thumbnails/58777.jpg', 0.7384615540504456),
@@ -45,7 +76,7 @@ import subprocess
 #     new_list.append(item[::-1])
 # print(new_list)
 # print(sorted(new_list, reverse=True)[:1])
-res = subprocess.check_output('ls .', shell=True)
+# res = subprocess.check_output('ls .', shell=True)
 # pid = ['COMMAND     PID  USER   FD   TYPE    DEVICE SIZE/OFF NODE NAME\n', 'tensorboa 45189 xuwei    3u  IPv4 136244799      0t0  TCP *:8010 (LISTEN)\n']
 # print(pid[1])
 # print(pid[1].split(' '))
@@ -82,9 +113,9 @@ pattern2 = re.compile(r'Start Epoch \d+ ...')
 now_epoch = int(re.compile(r'\d+').findall(pattern1.findall(log_buff)[-1])[0])
 
 print(total_epoch, now_epoch)"""
-
-if not os.path.exists("f:/666"):
-    os.mkdir("f:/666")
+#
+# if not os.path.exists("f:/666"):
+#     os.mkdir("f:/666")
 # class XmlNode():
 #     def __init__(self, x_dom, root):
 #         self.diff = 0
