@@ -1,3 +1,130 @@
+"""68 __import__(name, globals=None, locals=None, fromlist=(), level=0)   看不懂 菜鸟也看不懂
+这是一个日常 Python 编程中不需要用到的高级函数。返回元组列表。
+__import__() 函数用于动态加载类和函数 。
+如果一个模块经常变化就可以使用 __import__() 来动态载入。
+
+该函数会导入 name 模块，有可能使用给定的 globals 和 locals 来确定如何在包的上下文中解读名称。
+fromlist 给出了应该从由 name 指定的模块导入对象或子模块的名称。
+标准实现完全不使用其 locals 参数，而仅使用 globals 参数来确定 import 语句的包上下文。
+
+level 指定是使用绝对还是相对导入。0 (默认值) 意味着仅执行绝对导入。
+level 为正数值表示相对于模块调用 __import__() 的目录，将要搜索的父目录层数 (详情参见 PEP 328)。
+
+当 name 变量的形式为 package.module 时，通常将会返回最高层级的包（第一个点号之前的名称），而 不是 以 name 命名的模块。
+但是，当给出了非空的 fromlist 参数时，则将返回以 name 命名的模块。"""
+
+"""67 zip(*iterables)
+创建一个聚合了来自每个可迭代对象中的元素的迭代器。
+返回一个元组的迭代器，其中的第 i 个元组包含来自每个参数序列或可迭代对象的第 i 个元素。
+当所输入可迭代对象中最短的一个被耗尽时，迭代器将停止迭代。 当只有一个可迭代对象参数时，它将返回一个单元组的迭代器。
+不带参数时，它将返回一个空迭代器。 相当于:
+
+def zop(*iterables):
+    # zip('ABCD', 'xy') --> Ax By
+    sentinel = object()
+    iterators = [iter(it) for it in iterables]
+    while iterators:
+        result = []
+        for it in iterators:
+            elem = next(it, sentinel)
+            if elem is sentinel:
+                return
+            result.append(elem)
+        yield tuple(result)
+print(zop('ABCD', 'xy'))  # <generator object zop at 0x000000000286F678>
+print(list(zop('ABCD', 'xy')))  # [('A', 'x'), ('B', 'y')]
+
+函数会保证可迭代对象按从左至右的顺序被求值。 
+使得可以通过 zip(*[iter(s)]*n) 这样的惯用形式将一系列数据聚类为长度为 n 的分组。 
+这将重复 同样的 迭代器 n 次，以便每个输出的元组具有第 n 次调用该迭代器的结果。 
+它的作用效果就是将输入拆分为长度为 n 的数据块。
+当你不用关心较长可迭代对象末尾不匹配的值时，则 zip() 只须使用长度不相等的输入即可。 
+如果那些值很重要，则应改用 itertools.zip_longest()。
+zip() 与 * 运算符相结合可以用来拆解一个列表:"""
+# x = [1, 2, 3]
+# y = [4, 5, 6]
+# zipped = zip(x, y)
+# print(list(zipped))  # [(1, 4), (2, 5), (3, 6)]
+# x2, y2 = zip(*zip(x, y))
+# print(zip(*zip(x, y)))  # <zip object at 0x0000000009DA7B08>
+# print(list(zip(*zip(x, y))))  # [(1, 2, 3), (4, 5, 6)]
+# print(x == list(x2) and y == list(y2))  # True
+
+"""66 vars([object])
+返回模块、类、实例或任何其它具有 __dict__ 属性的对象的 __dict__ 属性。具有字典属性的字典对象
+模块和实例这样的对象具有可更新的 __dict__ 属性；
+但是，其它对象的 __dict__ 属性可能会设为限制写入（例如，类会使用 types.MappingProxyType 来防止直接更新字典）。
+不带参数时，vars() 的行为类似 locals()。 请注意，locals 字典仅对于读取起作用，因为对 locals 字典的更新会被忽略。"""
+# print(vars())  # {'__name__': '__main__', '__doc__': '66 vars([object]).....因为对 locals 字典的更新会被忽略。',
+# # '__package__': None, '__loader__': <_frozen_importlib_external.SourceFileLoader object at 0x00000000025FC1D0>,
+# # '__spec__': None, '__annotations__': {}, '__builtins__': <module 'builtins' (built-in)>,
+# # '__file__': 'C:/Users/...../backend/python/stdlib/1.Built-inFunctions.py', '__cached__': None}
+# class Runoob:
+#     a = 1
+# print(vars(Runoob))  # {'__module__': '__main__', 'a': 1,
+# #  '__dict__': <attribute '__dict__' of 'Runoob' objects>,
+# # '__weakref__': <attribute '__weakref__' of 'Runoob' objects>, '__doc__': None}
+# runoob = Runoob()
+# print(vars(runoob))  # {}
+
+"""65 class type(object)
+class type(name, bases, dict)
+传入一个参数时，返回 object 的类型。 返回值是一个 type 对象，通常与 object.__class__ 所返回的对象相同。
+推荐使用 isinstance() 内置函数来检测对象的类型，因为它会考虑子类的情况。
+传入三个参数时，返回一个新的 type 对象。 这在本质上是 class 语句的一种动态形式。
+name 字符串即类名并且会成为 __name__ 属性；bases 元组列出基类并且会成为 __bases__ 属性；
+而 dict 字典为包含类主体定义的命名空间并且会被复制到一个标准字典成为 __dict__ 属性。"""
+# # 一个参数实例
+# print(type(1))  # <class 'int'>
+# print(type(1) == int)  # 判断类型是否相等  # True
+# # 三个参数
+# class X(object):
+#     a = 1
+# X = type('X', (object,), dict(a=1))  # 产生一个新的类型 X
+# print(X)  # <class '__main__.X'>
+
+"""64 tuple([iterable])
+虽然被称为函数，但 tuple 实际上是一个不可变的序列类型"""
+
+"""63 super([type[, object-or-type]])
+返回一个代理对象，它会将方法调用委托给 type 指定的父类或兄弟类。"""
+# class A:
+#     def add(self, x):
+#         y = x + 1
+#         print(y)
+# class B(A):
+#     def add(self, x):
+#         super().add(x)
+# b = B()
+# b.add(2)  # 3
+
+"""62 sum(iterable[, start])
+从 start 开始自左向右对 iterable 中的项求和并返回总计值。 start 默认为 0。
+iterable 的项通常为数字，开始值则不允许为字符串。
+iterable -- 可迭代对象，如：列表、元组、集合。
+start -- 指定相加的参数，如果没有设置这个值，默认为0"""
+# print(sum([0, 1, 2]))  # 3
+# print(sum((2, 3, 4), 1))  # 元组计算总和后再加 1  # 10
+# print(sum([0, 1, 2, 3, 4], 2))  # 列表计算总和后再加 2  # 12
+# print(sum(range(5), 3))  # 13
+
+"""61 class str(object='')
+class str(object=b'', encoding='utf-8', errors='strict')"""
+
+"""60 @staticmethod
+将方法转换为静态方法。
+静态方法不会接收隐式的第一个参数。要声明一个静态方法，请使用此语法"""
+# class C(object):
+#     @staticmethod
+#     def f():
+#         print('runoob')
+# print(C.f())  # 静态方法无需实例化runoob \nNone
+# C.f()  # runoob
+# print(type(C.f()))  # runoob\n<class 'NoneType'>
+# cobj = C()
+# cobj.f()  # runoob
+# print(cobj.f())  # 也可以实例化后调用runoob\n None
+
 """59 sorted(iterable, *, key=None, reverse=False)
 根据 iterable 中的项返回一个新的已排序列表。
 具有两个可选参数，它们都必须指定为关键字参数。
