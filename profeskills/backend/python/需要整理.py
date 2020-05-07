@@ -17,9 +17,21 @@ from xml.dom import minidom
 import re
 import xml.etree.ElementTree as ET
 import subprocess
-log_dir = 'ss'
-b = 'tensorboard --logdir={} --port=8010 --host=0.0.0.0'.format(log_dir)
-print(b)
+
+# # date = "2018-04-20 15:42:54"
+# date = "2020-05-07 11:03:18"
+#
+#
+# #转换成时间数组
+# timeArray = time.strptime(date, "%Y-%m-%d %H:%M:%S")
+#
+# #1).转换成时间戳
+# timestamp = time.mktime(timeArray)
+# print(int(timestamp))
+# print(int(time.time()) - int(timestamp))
+# log_dir = 'ss'
+# b = 'tensorboard --logdir={} --port=8010 --host=0.0.0.0'.format(log_dir)
+# print(b)
 # log_path = os.path.join('vislogpath', 'log.log')
 # print(log_path)
 # print(time.localtime(time.time()))
