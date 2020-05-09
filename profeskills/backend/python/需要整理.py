@@ -17,7 +17,13 @@ from xml.dom import minidom
 import re
 import xml.etree.ElementTree as ET
 import subprocess
-
+# f_datas.write('backup  = %s\n' % 'backup')
+a = ('/home/irecog/ai_display_platform/info/static/upload/202005091443182018-12-18_000573_res.jpg',
+         [{'objectType': 'person', 'x': 254, 'y': 171, 'w': 59, 'h': 75, 'rate': 1.0}])
+print(type(a))
+print(a[1])
+print(a[0])
+print(type(a[0]))
 # # date = "2018-04-20 15:42:54"
 # date = "2020-05-07 11:03:18"
 #
