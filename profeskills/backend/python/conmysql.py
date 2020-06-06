@@ -54,25 +54,40 @@ import MySQLdb
 # # 3 数据库插入操作
 # # 以下实例使用执行 SQL INSERT 语句向表 EMPLOYEE 插入记录：
 
+# import random
+
+
+# # dat1 = 'abcdefghijklmnopqrstuvwxyz'
+# # dat2 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+# # dat3 = '0123456789'
+# # # random.choice()
+# # # 多个字符中选取指定数量的字符组成新字符串：
+# # print(''.join(random.sample(['z','y','x','w','v','u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a'], 5)))
+# # print(''.join(random.sample('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 5)))
+
 
 # # 打开数据库连接
-# db = MySQLdb.connect("localhost", "root", "123456", "pythontest", charset='utf8' )
+# db = MySQLdb.connect("localhost", "root", "123456", "cloud", charset='utf8' )
 
 # # 使用cursor()方法获取操作游标 
 # cursor = db.cursor()
 
-# # SQL 插入语句
-# sql = """INSERT INTO EMPLOYEE(FIRST_NAME,
-#          LAST_NAME, AGE, SEX, INCOME)
-#          VALUES ('Mac', 'Mohan', 20, 'M', 2000)"""
-# try:
-#    # 执行sql语句
-#    cursor.execute(sql)
-#    # 提交到数据库执行
-#    db.commit()
-# except:
-#    # Rollback in case there is any error
-#    db.rollback()
+# dat = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+# for i in range(20):
+#     name = ''.join(random.sample(dat, 5))
+#     api = ''.join(random.sample(dat, 8))
+#     introduct = ''.join(random.sample(dat, 10))
+#     # SQL 插入语句
+#     sql = """INSERT INTO algomod(name, api, introduct, is_delete, ctime, utime) VALUES ('%s', '%s', '%s', 0, NOW(), NOW())""" % (name, api, introduct)
+#     print(sql)
+#     try:
+#         # 执行sql语句
+#         cursor.execute(sql)
+#         # 提交到数据库执行
+#         db.commit()
+#     except:
+#         # Rollback in case there is any error
+#         db.rollback()
 
 # # 关闭数据库连接
 # db.close()
@@ -152,13 +167,13 @@ import MySQLdb
 # # 更新操作用于更新数据表的的数据，以下实例将 EMPLOYEE 表中的 SEX 字段为 'M' 的 AGE 字段递增 1：
 
 # # 打开数据库连接
-# db = MySQLdb.connect("localhost", "root", "123456", "pythontest", charset='utf8' )
+# db = MySQLdb.connect("localhost", "root", "123456", "cloud", charset='utf8' )
 
 # # 使用cursor()方法获取操作游标 
 # cursor = db.cursor()
 
 # # SQL 更新语句
-# sql = "UPDATE EMPLOYEE SET AGE = AGE + 1 WHERE SEX = '%c'" % ('M')
+# sql = "UPDATE algomod SET is_delete = 1 WHERE id < %s" % (4)
 # try:
 #    # 执行SQL语句
 #    cursor.execute(sql)
