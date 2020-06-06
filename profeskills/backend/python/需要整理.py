@@ -17,18 +17,94 @@ git commit
 位运算：（1）&（2） | （3）~（4） ^
 逻辑运算：（1）and（2） or （3）not
 关系运算：（1）in （2）not in"""
-# import urllib.request
-# import psutil
-# import time
-# import requests
-# import os
-# from xml.dom import minidom
-# import re
-# import xml.etree.ElementTree as ET
-# import subprocess
-srr = '/data/zhy_ai_data_platform_static/train/shufflenet/20205238/vislog/log.log'
-a = srr.split('vislog/')
-print(a)
+import urllib.request
+import psutil
+import time
+import requests
+import os
+from xml.dom import minidom
+import re
+import xml.etree.ElementTree as ET
+import subprocess
+import shutil
+
+# #----------------这个是生成字典的脚本-----------------
+# fileee = r"C:\Users\Administrator\Desktop\666666"
+# file2 = r"C:\Users\Administrator\Desktop\camid.py"
+# mok = {}
+# for fil in os.listdir(fileee):
+#     # mok = {}
+#     camid = fil.split('_')[0]
+#     with open(fileee + '\\'+ fil, 'r') as f:
+#         data = json.load(f)
+#         dependencies = data['shapes']
+        
+#         for i in dependencies:
+#             # mok = {}
+#             # print(i["points"])
+#             # print(type(i["points"]))
+#             val = str(i["points"])
+#             mok[camid] = val
+#             # mok.update({camid: val})
+    
+#         # print(mok)
+#         # f = {}
+#         # f.update(mok)
+# print(mok)
+# p = open(file2, 'w')
+# p.write(str(mok))
+# p.close
+#         # print(dependencies)
+# # print(os.listdir(fileee))
+# print(1)
+
+
+ 
+# # with open('who.json', 'r') as f:
+# #     data = json.load(f)
+# #     dependencies = data['shapes']
+# #     # for k, v in dependencies.iteritems():
+# #     #     print(f'{k}@{v}')
+# #     print
+
+# #-------------------------------字典终----------------------
+
+
+# -------haishi move
+
+# # 3ge 文件夹
+# fileee = r"C:\Users\Administrator\Desktop\66678"
+# file2 = r"C:\Users\Administrator\Desktop\666666"
+# file3 = r"C:\Users\Administrator\Desktop\777777"
+
+# # 遍历文件 先把文件移动到一个文件夹，切分出来名字
+# for fil in os.listdir(fileee):
+#     camid = fil.split('_')[0]
+#     shutil.move(fileee + "\\" + fil, file2)
+# # 然后 再次遍历此文件夹
+#     for fi2 in os.listdir(fileee):
+# # 切分字符串
+#         camid2 = fi2.split('_')[0]
+# # 如果设备ID与上一个设备ID一样 移动这两个文件夹
+
+#         if camid == camid2:
+#             shutil.move(fileee + "\\" + fi2, file3)
+#             shutil.move(file2 + "\\" + fil, file3)
+
+
+
+# #---------------这个是移动文件夹
+# fileee = r"C:\Users\Administrator\Desktop\泰州线下区域"
+
+# for fil in os.listdir(fileee):
+#     mok = {}
+#     camid = fil.split('.')[1]
+#     if camid == 'json':
+#         shutil.move(fileee + "\\" + fil, r"C:\Users\Administrator\Desktop\66678")
+
+# srr = '/data/zhy_ai_data_platform_static/train/shufflenet/20205238/vislog/log.log'
+# a = srr.split('vislog/')
+# print(a)
 
 # f_datas.write('backup  = %s\n' % 'backup')
 # a = ('/home/irecog/ai_display_platform/info/static/upload/202005091443182018-12-18_000573_res.jpg',
