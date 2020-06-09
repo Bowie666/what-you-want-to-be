@@ -1,5 +1,12 @@
 import pymysql
 import MySQLdb
+# import time
+# print(int(time.time()))
+# for i in range(10):
+#     if 5>4:
+#         if i in [1,3,5,7,9]:
+#             continue
+#         print(i)
 # # 1 连接数据库 实例：
 # # 以下实例链接Mysql的TESTDB数据库：
 # # import MySQLdb
@@ -73,12 +80,16 @@ import MySQLdb
 # cursor = db.cursor()
 
 # dat = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+# dat3 = '0123456789'
 # for i in range(20):
+#     mobile = ''.join(random.sample(dat, 11))
+#     password = ''.join(random.sample(dat3, 6))
 #     name = ''.join(random.sample(dat, 5))
-#     api = ''.join(random.sample(dat, 8))
-#     introduct = ''.join(random.sample(dat, 10))
+#     email = ''.join(random.sample(dat, 8)) + "@163.com"
+#     introduction = ''.join(random.sample(dat, 25))
 #     # SQL 插入语句
-#     sql = """INSERT INTO algomod(name, api, introduct, is_delete, ctime, utime) VALUES ('%s', '%s', '%s', 0, NOW(), NOW())""" % (name, api, introduct)
+#     # sql = """INSERT INTO algomod(name, api, introduct, is_delete, ctime, utime) VALUES ('%s', '%s', '%s', 0, NOW(), NOW())""" % (name, api, introduct)  # 变电配电表
+#     sql = """INSERT INTO user(mobile, password, name, email, introduction, status, last_login, ctime, utime) VALUES ('%s', '%s', '%s', '%s','%s', 0, NOW(), NOW(), NOW())""" % (mobile, password, name, email, introduction)
 #     print(sql)
 #     try:
 #         # 执行sql语句
@@ -173,7 +184,8 @@ import MySQLdb
 # cursor = db.cursor()
 
 # # SQL 更新语句
-# sql = "UPDATE algomod SET is_delete = 1 WHERE id < %s" % (4)
+# # sql = "UPDATE algomod SET is_delete = 1 WHERE id < %s" % (4)
+# sql = "UPDATE algomod SET type = '通用' WHERE id < %s" % (5)
 # try:
 #    # 执行SQL语句
 #    cursor.execute(sql)
@@ -182,6 +194,7 @@ import MySQLdb
 # except:
 #    # 发生错误时回滚
 #    db.rollback()
+#    print(1)
 
 # # 关闭数据库连接
 # db.close()
