@@ -29,10 +29,31 @@ import subprocess
 import shutil
 import json
 
-data = requests.request("GET", "http://58.58.111.158:20701/api/models")
-print(data)  # <Response [200]>
-print(type(data))  # <class 'requests.models.Response'>
-print(data.text)
+# --------------------解析ai服务的模型文件
+# data = requests.request("GET", "http://58.58.111.158:20701/api/models")
+# data = data.text
+# print(type(data))  # <class 'str'>
+# print(type(eval(data)))  # <class 'dict'>
+# data = eval(data)
+# # 遍历所有的算法
+# for algo in data["models"]:
+#     apiname = algo["api_name"]
+#     descrip = algo["description"]
+#     print(apiname)
+#     print(descrip)
+#     for tag in algo["tags"]:
+#         name = tag["name"]
+#         title = tag["title"]
+#         origin_id = tag["origin_id"]
+#         print(name)
+#         print(title)
+#         print(origin_id)
+#     # print(algo)
+# ---------------hhhhhh解析返回值
+# data = requests.request("GET", "http://58.58.111.158:20701/api/models")
+# print(data)  # <Response [200]>
+# print(type(data))  # <class 'requests.models.Response'>
+# print(data.text)
 
 # #----------------这个是生成字典的脚本-----------------
 # fileee = r"C:\Users\Administrator\Desktop\666666"
