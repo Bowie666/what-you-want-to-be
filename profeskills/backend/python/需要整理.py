@@ -27,6 +27,12 @@ import re
 import xml.etree.ElementTree as ET
 import subprocess
 import shutil
+import json
+
+data = requests.request("GET", "http://58.58.111.158:20701/api/models")
+print(data)  # <Response [200]>
+print(type(data))  # <class 'requests.models.Response'>
+print(data.text)
 
 # #----------------这个是生成字典的脚本-----------------
 # fileee = r"C:\Users\Administrator\Desktop\666666"
