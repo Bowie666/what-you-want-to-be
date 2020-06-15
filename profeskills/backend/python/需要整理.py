@@ -28,7 +28,121 @@ import xml.etree.ElementTree as ET
 import subprocess
 import shutil
 import json
+import base64
+import pymysql
+import MySQLdb
 
+
+data = requests.request("GET", "http://58.58.111.158:20701/api/results/transmission_channel_hidden_trouble/58766.jpg/")
+print(type(data))
+print(data)
+f=open(r'C:\Users\Administrator\Desktop\新建文件夹/333.png','wb')
+#将下载到的图片数据写入文件
+f.write(data.content)
+
+# # 插入数据库模型及标签名字
+
+
+# db = MySQLdb.connect("localhost", "root", "123456", "cloud", charset='utf8' )
+
+# # 使用cursor()方法获取操作游标 
+# cursor = db.cursor()
+
+# data = requests.request("GET", "http://58.58.111.158:20701/api/models")
+# data = data.text
+# print(type(data))  # <class 'str'>
+# print(type(eval(data)))  # <class 'dict'>
+# data = eval(data)
+# # 遍历所有的算法
+# for algo in data["models"]:
+#     apiname = algo["api_name"]
+#     descrip = algo["description"]
+#     category = algo["category"]
+#     tags = int(len(algo["tags"]))
+#     print(apiname)
+#     print(descrip)
+#     print(category)
+#     # print(len(tags))
+#     sql = """INSERT INTO algomod(name, type, api, tags, is_delete, ctime, utime) VALUES ('%s', '%s', '%s','%s', 0, NOW(), NOW())""" % (descrip, category, apiname, tags)
+#     try:
+#         # 执行sql语句
+#         cursor.execute(sql)
+#         # 提交到数据库执行
+#         db.commit()
+#         print(1)
+#     except:
+#         # Rollback in case there is any error
+#         db.rollback()
+#         print(2)
+#     for tag in algo["tags"]:
+#         name = tag["name"]
+#         title = tag["title"]
+#         origin_id = int(tag["origin_id"])
+
+#         sql1 = """INSERT INTO tags(modelname, name, title, origin_id, is_delete) VALUES ('%s', '%s', '%s','%s', 0)""" % (descrip, name, title, origin_id)
+
+#         try:
+#             # 执行sql语句
+#             cursor.execute(sql1)
+#             # 提交到数据库执行
+#             db.commit()
+#             print(3)
+#         except:
+#             # Rollback in case there is any error
+#             db.rollback()
+#             print(4)
+
+# # 关闭数据库连接
+# db.close()
+
+
+
+# url = "http://58.58.111.158:20701/api/analysis"
+# imgpath = r"C:\Users\Administrator\Desktop\garbage\暂时不\tuppain\传输通道\58748.jpg"
+# headers = {
+#     "Content-Type":"multipart/form-data",
+#     "accept":"application/json"
+# }
+# f = open(imgpath, "rb")
+# img = f.read()
+# # base64_str = base64.b64encode(image.file.read()).decode('utf-8')
+# data = {
+#     "image": base64.b64encode(img).decode("utf-8"),
+#     "file_name": "66.jpg",
+#     "model": "transmission_channel_hidden_trouble",
+#     "threshold": 0.6,
+#     "timestamp": "2020-06-11T03:02:02.719Z"
+# }
+# # resp = requests.post(url,headers=headers, json=json.dumps(data))
+# resp = requests.post(url,headers=headers, data=json.dumps(data))
+# print(resp)
+# print(resp.text)
+
+# # p/rint(os.getcwd())
+# url = "http://58.58.111.158:20701/api/analysis"
+# imgpath = r"C:\Users\Administrator\Desktop\garbage\暂时不\tuppain\传输通道\58748.jpg"
+# headers = {
+#     "Content-Type":"multipart/form-data",
+#     "accept":"application/json"
+# }
+# f = open(imgpath, "rb")
+# data = {
+
+#     "model": "transmission_channel_hidden_trouble",
+#     "threshold": "0.6",
+#     "timestamp": "2020-06-11T10:25:08"
+# }
+# files = {"image": f}
+# resp = requests.post(url,headers=headers, data=data, files=files)
+
+# # resp = requests.post(url,headers=headers, files=files, model="transmission_channel_hidden_trouble",threshold="0.6", timestamp="2020-06-11T10:25:08")
+# print(resp)
+# print(resp.text)
+
+# data = requests.request("POST", "http://58.58.111.158:20701/api/analysis/form", )
+# t = "T"
+# print(time.strftime("%Y-%m-%dT%H:%M:%S.%f", time.localtime()))
+# print(time.timezone())
 # --------------------解析ai服务的模型文件
 # data = requests.request("GET", "http://58.58.111.158:20701/api/models")
 # data = data.text
