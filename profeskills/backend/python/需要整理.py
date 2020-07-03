@@ -31,14 +31,44 @@ import json
 import base64
 import pymysql
 import MySQLdb
+from datetime import datetime
+import numpy as np
+
+# a = np.array([[1,2,3], [4,5,6],[7,8,9]])
+# print(a)
+# print(type(a))
+# print(a[1][1])
+# if a[1][1] == 0 or a[1][2] == 3 or a[1][1] == 1:
+#     print(a)
+
+# ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+# def allowed_file(filename):
+#     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-data = requests.request("GET", "http://58.58.111.158:20701/api/results/transmission_channel_hidden_trouble/58766.jpg/")
-print(type(data))
-print(data)
-f=open(r'C:\Users\Administrator\Desktop\新建文件夹/333.png','wb')
-#将下载到的图片数据写入文件
-f.write(data.content)
+# import imghdr
+# print(imghdr.what(r"C:\Users\Administrator\Downloads\hehe.jpg"))
+# print(imghdr.what(r"C:\Users\Administrator\Downloads\t4.jpg"))
+
+# if imghdr.what(r"C:\Users\Administrator\Downloads\hehe.jpg") not in ["jpg", "png"]:
+#     print(1)
+
+# # print(datetime.now)
+# imgpath = r"C:\Users\Administrator\Desktop\garbage\暂时不\tuppain\传输通道"
+# t1=time.time()
+# for i in os.listdir(imgpath):
+    
+#     basedir = os.path.join(imgpath, i)
+#     print(basedir)
+#     time.sleep(0.5)
+# print('time:', time.time() - t1)
+
+# data = requests.request("GET", "http://58.58.111.158:20701/api/results/transmission_channel_hidden_trouble/58766.jpg/")
+# print(type(data))
+# print(data)
+# f=open(r'C:\Users\Administrator\Desktop\新建文件夹/333.png','wb')
+# #将下载到的图片数据写入文件
+# f.write(data.content)
 
 # # 插入数据库模型及标签名字
 
