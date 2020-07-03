@@ -73,35 +73,37 @@ import MySQLdb
 # # print(''.join(random.sample('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 5)))
 
 
-# # 打开数据库连接
-# db = MySQLdb.connect("localhost", "root", "123456", "cloud", charset='utf8' )
+# 打开数据库连接
+db = MySQLdb.connect("localhost", "root", "123456", "cloud", charset='utf8' )
 
-# # 使用cursor()方法获取操作游标 
-# cursor = db.cursor()
+# 使用cursor()方法获取操作游标 
+cursor = db.cursor()
+import random
+dat = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+dat3 = '01234567890123456789'
+for i in range(20):
+    mobile = ''.join(random.sample(dat3, 11))
+    password = ''.join(random.sample(dat3, 6))
+    name = ''.join(random.sample(dat, 5))
+    email = ''.join(random.sample(dat, 8)) + "@163.com"
+    introduction = ''.join(random.sample(dat, 25))
+    # SQL 插入语句
+    # sql = """INSERT INTO algomod(name, api, introduct, is_delete, ctime, utime) VALUES ('%s', '%s', '%s', 0, NOW(), NOW())""" % (name, api, introduct)  # 变电配电表
+    sql = """INSERT INTO user(mobile, password, username, email, status, last_login, ctime, utime) VALUES ('%s', '%s', '%s', '%s', 0, NOW(), NOW(), NOW())""" % (mobile, password, name, email)
+    print(sql)
+    # try:
+    # 执行sql语句
+    cursor.execute(sql)
+    # 提交到数据库执行
+    db.commit()
+    print(1)
+    # except:
+    #     # Rollback in case there is any error
+    #     db.rollback()
+    #     print(2)
 
-# dat = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-# dat3 = '0123456789'
-# for i in range(20):
-#     mobile = ''.join(random.sample(dat, 11))
-#     password = ''.join(random.sample(dat3, 6))
-#     name = ''.join(random.sample(dat, 5))
-#     email = ''.join(random.sample(dat, 8)) + "@163.com"
-#     introduction = ''.join(random.sample(dat, 25))
-#     # SQL 插入语句
-#     # sql = """INSERT INTO algomod(name, api, introduct, is_delete, ctime, utime) VALUES ('%s', '%s', '%s', 0, NOW(), NOW())""" % (name, api, introduct)  # 变电配电表
-#     sql = """INSERT INTO user(mobile, password, name, email, introduction, status, last_login, ctime, utime) VALUES ('%s', '%s', '%s', '%s','%s', 0, NOW(), NOW(), NOW())""" % (mobile, password, name, email, introduction)
-#     print(sql)
-#     try:
-#         # 执行sql语句
-#         cursor.execute(sql)
-#         # 提交到数据库执行
-#         db.commit()
-#     except:
-#         # Rollback in case there is any error
-#         db.rollback()
-
-# # 关闭数据库连接
-# db.close()
+# 关闭数据库连接
+db.close()
 
 # # 3（变）以上例子也可以写成如下形式：
 
