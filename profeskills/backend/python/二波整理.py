@@ -11,39 +11,49 @@ from xml.dom.minidom import parse
 from xml.dom import minidom
 import shutil
 import json
+from PIL import Image
 
 
-# ------------------ Python 连接 MongoDB -------------------
-#导入模块
-from pymongo import MongoClient
-#建立Mongodb数据库连接
-client=MongoClient('localhost',27017)
-#test为数据库
-db=client.app
-# 认证
-db.authenticate("tian", "123")
-#test为集合，相当于表名(没有的话会去创建的)
-collection=db.address
-#插入集合数据
-# collection.insert({"title":"test"})
-# 更新某个字段
-student = collection.find_one({'name': 'hu'})
-student['address'] = 'button'
-result = collection.update_one({'name': 'hu'}, {'$set': student})
-#打印集合中所有数据
-for item in collection.find():
-    print(item)
-#更新集合里的数据
-# collection.update({"title":"test"},{"title":"this is update test"})
-#关闭连接
-client.close()
-#!!!!其他操作
-#查找集合中单条数据
-#print collection.find_one()
-#删除集合collection中的所有数据
-#collection.remove()
-#删除集合collection
-#collection.drop()
+# --------------- 缩略图 ---------------------
+img = r"C:\Users\Administrator\Desktop\tt.jpg"
+img2 = r"C:\Users\Administrator\Desktop\tt1.jpg"
+im=Image.open(img)
+print(im.format,im.size,im.mode)
+im.thumbnail((800,800))
+print(im.format,im.size,im.mode)
+im.save(img2,'JPEG')
+
+# # ------------------ Python 连接 MongoDB -------------------
+# #导入模块
+# from pymongo import MongoClient
+# #建立Mongodb数据库连接
+# client=MongoClient('localhost',27017)
+# #test为数据库
+# db=client.app
+# # 认证
+# db.authenticate("tian", "123")
+# #test为集合，相当于表名(没有的话会去创建的)
+# collection=db.address
+# #插入集合数据
+# # collection.insert({"title":"test"})
+# # 更新某个字段
+# student = collection.find_one({'name': 'hu'})
+# student['address'] = 'button'
+# result = collection.update_one({'name': 'hu'}, {'$set': student})
+# #打印集合中所有数据
+# for item in collection.find():
+#     print(item)
+# #更新集合里的数据
+# # collection.update({"title":"test"},{"title":"this is update test"})
+# #关闭连接
+# client.close()
+# #!!!!其他操作
+# #查找集合中单条数据
+# #print collection.find_one()
+# #删除集合collection中的所有数据
+# #collection.remove()
+# #删除集合collection
+# #collection.drop()
 
 # # -----------------gif 动图分解 暂时还没测试-------------
 # import os

@@ -128,20 +128,20 @@ import numpy as np
 
 
 # url = "http://58.58.111.158:20701/api/analysis"
-# imgpath = r"C:\Users\Administrator\Desktop\garbage\暂时不\tuppain\传输通道\58748.jpg"
+# imgpath = r"D:\Users\Administrator\Desktop\garbage\暂时不\tuppain\人员行为分析\变电站人员行为分析功能.png"
 # headers = {
-#     "Content-Type":"multipart/form-data",
-#     "accept":"application/json"
+#     # "Content-Type":"multipart/form-data",
+#     "Content-Type":"application/json"
 # }
 # f = open(imgpath, "rb")
 # img = f.read()
 # # base64_str = base64.b64encode(image.file.read()).decode('utf-8')
 # data = {
 #     "image": base64.b64encode(img).decode("utf-8"),
-#     "file_name": "66.jpg",
-#     "model": "transmission_channel_hidden_trouble",
+#     "file_name": "变电站人员行为分析功能.png",
+#     "model": "biandian_action_wear",
 #     "threshold": 0.6,
-#     "timestamp": "2020-06-11T03:02:02.719Z"
+#     "timestamp": ["2020-06-11T03:02:02.719Z", "2020-06-11T03:02:02.719Z", "2020-06-11T03:02:02.719Z"]
 # }
 # # resp = requests.post(url,headers=headers, json=json.dumps(data))
 # resp = requests.post(url,headers=headers, data=json.dumps(data))
