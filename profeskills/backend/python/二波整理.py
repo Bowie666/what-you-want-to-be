@@ -6,22 +6,23 @@ import time
 import gzip
 from hashlib import md5
 import sys
-import io
+import io, datetime
 from xml.dom.minidom import parse
 from xml.dom import minidom
 import shutil
 import json
 from PIL import Image
 
+import os
 
-# --------------- 缩略图 ---------------------
-img = r"C:\Users\Administrator\Desktop\tt.jpg"
-img2 = r"C:\Users\Administrator\Desktop\tt1.jpg"
-im=Image.open(img)
-print(im.format,im.size,im.mode)
-im.thumbnail((800,800))
-print(im.format,im.size,im.mode)
-im.save(img2,'JPEG')
+# # --------------- 缩略图 ---------------------
+# img = r"C:\Users\Administrator\Desktop\tt.jpg"
+# img2 = r"C:\Users\Administrator\Desktop\tt1.jpg"
+# im=Image.open(img)
+# print(im.format,im.size,im.mode)
+# im.thumbnail((800,800))
+# print(im.format,im.size,im.mode)
+# im.save(img2,'JPEG')
 
 # # ------------------ Python 连接 MongoDB -------------------
 # #导入模块
