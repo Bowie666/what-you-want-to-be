@@ -18,7 +18,7 @@ git commit
 逻辑运算：（1）and（2） or （3）not
 关系运算：（1）in （2）not in"""
 import urllib.request
-import psutil
+# import psutil
 import time
 import requests
 import os
@@ -32,7 +32,26 @@ import base64
 import pymysql
 import MySQLdb
 from datetime import datetime
-import numpy as np
+from pprint import pprint
+
+# import numpy as np
+
+# if 2 != 5 or 2!=3:
+#     print(1)
+# else:
+#     print(2)
+# y = 6
+# x = 4
+# if x == 4: print(x, y); x, y = y, x
+# print(x)
+# print(y)
+# url = "http://58.58.111.158:20701/api/models?detail=true"
+# resp = requests.get(url)
+# model_data = resp.json()
+# # print(type(model_data))
+# # print(type(eval(model_data)))
+# for i in model_data["models"]:
+#     pprint(i)
 
 # a = np.array([[1,2,3], [4,5,6],[7,8,9]])
 # print(a)
@@ -127,7 +146,7 @@ import numpy as np
 
 
 
-# url = "http://58.58.111.158:20701/api/analysis"
+# url = "http://58.58.111.158:20701/api/autopush/analysis"
 # imgpath = r"D:\Users\Administrator\Desktop\garbage\暂时不\tuppain\人员行为分析\变电站人员行为分析功能.png"
 # headers = {
 #     # "Content-Type":"multipart/form-data",
@@ -138,10 +157,11 @@ import numpy as np
 # # base64_str = base64.b64encode(image.file.read()).decode('utf-8')
 # data = {
 #     "image": base64.b64encode(img).decode("utf-8"),
-#     "file_name": "变电站人员行为分析功能.png",
+#     # "file_name": "变电站人员行为分析功能.png",
 #     "model": "biandian_action_wear",
+#     "push_url": "http://58.58.111.158:20803/getjson?name=xiaopihai",
 #     "threshold": 0.6,
-#     "timestamp": ["2020-06-11T03:02:02.719Z", "2020-06-11T03:02:02.719Z", "2020-06-11T03:02:02.719Z"]
+#     "timestamp": ["2020-08-14T03:02:02.719Z", "2020-08-14T03:02:02.719Z", "2020-08-14T03:02:02.719Z"]
 # }
 # # resp = requests.post(url,headers=headers, json=json.dumps(data))
 # resp = requests.post(url,headers=headers, data=json.dumps(data))
@@ -149,25 +169,27 @@ import numpy as np
 # print(resp.text)
 
 # # p/rint(os.getcwd())
-# url = "http://58.58.111.158:20701/api/analysis"
-# imgpath = r"C:\Users\Administrator\Desktop\garbage\暂时不\tuppain\传输通道\58748.jpg"
+# url = "http://58.58.111.158:20701/api/autopush/analysis"
+# imgpath = r"D:\Users\Administrator\Desktop\garbage\暂时不\tuppain\ml\58748.jpg"
 # headers = {
-#     "Content-Type":"multipart/form-data",
+#     # "Content-Type":"multipart/form-data",
 #     "accept":"application/json"
 # }
-# f = open(imgpath, "rb")
+# with open(imgpath, "rb") as f:
+#     img = f.read()
 # data = {
-
+#     "push_url": "http://58.58.111.158:20803/aiannotate?id=xiaopihai",
 #     "model": "transmission_channel_hidden_trouble",
 #     "threshold": "0.6",
-#     "timestamp": "2020-06-11T10:25:08"
+#     "timestamp": ["2020-08-14T03:02:02.719Z", "2020-08-14T03:02:02.719Z", "2020-08-14T03:02:02.719Z"]
 # }
-# files = {"image": f}
+# files = {"image": (os.path.basename(imgpath), img, 'image/jpg')}
+# # (get_filename(path), image_content, 'image/jpg')
 # resp = requests.post(url,headers=headers, data=data, files=files)
 
 # # resp = requests.post(url,headers=headers, files=files, model="transmission_channel_hidden_trouble",threshold="0.6", timestamp="2020-06-11T10:25:08")
 # print(resp)
-# print(resp.text)
+# print(resp.json()["uuid"])
 
 # data = requests.request("POST", "http://58.58.111.158:20701/api/analysis/form", )
 # t = "T"
