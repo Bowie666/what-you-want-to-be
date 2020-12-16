@@ -854,22 +854,33 @@ optimize 实参指定编译器的优化级别；默认值 -1 选择与解释器�
 用于检查一个对象是否是可调用的。如果返回 True，object 仍然可能调用失败；
 但如果返回 False，调用对象 object 绝对不会成功。
 对于函数、方法、lambda 函式、 类以及实现了 __call__ 方法的类实例, 它都返回 True"""
-# print(callable(object))
-# print(callable(0))
-# print(callable(1))
-# print(callable("look"))
+# print(callable(object))  # True
+# print(callable(0))  # False
+# print(callable(1))  # False
+# print(callable("look"))  # False
 # def add(a, b):
 #     return a + b
-# print(callable(add))
-#
+# print(callable(add))  # True
+
 # class B:
 #     def method(self):
 #         return 0
 # # 这个是声明
-# print(callable(B))
+# print(callable(B))  # True
 # # 这个是创建实例
 # b = B()
-# print(callable(b))
+# print(callable(b))  # False
+# # ----这个比B函数多了一个__call__的魔法方法
+# class C:
+#     def method(self):
+#         return 0
+#     def __call__(self):
+#         pass
+# # 这个是声明
+# print(callable(C))  # True
+# # 这个是创建实例
+# c = C()
+# print(callable(c))  # True
 
 """8 class bytes([source[, encoding[, errors]]])
 返回一个新的“bytes”对象， 是一个不可变序列，包含范围为 0 <= x < 256 的整数。
