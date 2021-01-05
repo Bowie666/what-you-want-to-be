@@ -5,7 +5,12 @@
 -- select count(Ssex), Ssex from student group by Ssex;
 -- 3.查询名字中含有「风」字的学生信息
 -- select * from student where Sname like '%风%'
-
+-- 4.检索" 01 "课程分数小于 60，按分数降序排列的学生信息
+-- sc表 student表
+-- select *
+-- from sc left join student on sc.SId=student.SId
+-- where sc.CId="01" and sc.score<60
+-- order by sc.score desc
 
 -- # -------------------- 中等 ---------------
 -- 1.查询学过「张三」老师授课的同学的信息---------待优化
