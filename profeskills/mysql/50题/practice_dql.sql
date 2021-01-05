@@ -18,3 +18,32 @@
 -- (4)拿着cid去找sid
 -- select * from student where Sid in (select Sid from sc where Cid=(select Cid from course where Tid=(select Tid from teacher where Tname="张三")))
 -- (5)优化
+
+-- 2.查询每门课程被选修的学生数
+-- -- 思路-->先分组 在左关联
+-- select 
+--     t1.cou,
+--     t2.Cname
+-- from
+--     (select count(Sid) cou, CId from sc group by CId) t1
+-- left join
+--     course t2
+-- on
+--     t1.CId=t2.CId
+
+
+-- # -------------------- 偏难 ---------------
+-- 1.查询没有学全所有课程的同学的信息
+-- 思路-->按数量去找
+-- select
+--     student.SId,
+--     ifnull(t1.cou, 0),
+--     student.Sname,
+--     student.Sage,
+--     student.Ssex
+-- from
+--     (select SId, count(CId) cou from sc group by SId) t1 
+-- right join
+--     student 
+-- on t1.SId = student.SId
+-- where ifnull(cou, 0) < (select count(CId) from course)
