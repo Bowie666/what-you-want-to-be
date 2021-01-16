@@ -10,6 +10,11 @@ import keyword
 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']
 """
 
+# 2 and or
+# and 和 or 逻辑关系用语
+# False and 返回 False 不执行后面的语句
+# True or 直接返回True，不执行后面的语句 
+
 # 1 False True None
 # 前两个是bool值 不用多说  None 属于特殊类型
 # print(None, type(None))  # None <class 'NoneType'>
