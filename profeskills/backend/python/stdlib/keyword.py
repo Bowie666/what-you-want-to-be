@@ -9,3 +9,7 @@ import keyword
 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 
 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']
 """
+
+# 1 False True None
+# 前两个是bool值 不用多说  None 属于特殊类型
+# print(None, type(None))  # None <class 'NoneType'>
