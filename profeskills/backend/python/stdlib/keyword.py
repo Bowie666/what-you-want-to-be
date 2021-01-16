@@ -10,6 +10,15 @@ import keyword
 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']
 """
 
+# 4 break contiue 
+# break 用来终止循环 用在while和for循环中 直接跳出整个循环
+# continue 是跳出当前循环
+
+# 3 assert 
+# 声明其布尔值必须为真的判定 如果发生异常就说明表达示为假
+# assert 1 == 2  # AssertionError
+# assert 1 == 1
+
 # 2 and or
 # and 和 or 逻辑关系用语
 # False and 返回 False 不执行后面的语句
