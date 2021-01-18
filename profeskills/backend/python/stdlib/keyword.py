@@ -10,6 +10,48 @@ import keyword
 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']
 """
 
+# 21 yield
+# 任何使用yield的函数都称之为生成器 而生成器通常可理解成迭代器
+# 迭代器 yield的意思是生产 返回了一个生成器对象 每个生成器只能使用一次
+# def cou(n):
+#     while n>0:
+#         yield n
+#         n -= 1
+# c = cou(3)
+# print(c.__next__())  # 3
+# print(next(c))  # 2
+# print(next(c))  # 1
+# print(next(c))  # StopIteration
+
+# 20 with
+# 后面返回的对象要求必须两__enter__()/__exit__()这两个方法
+# 需要事先做一些设置 事后做一些清理
+# class Test:
+#     def __enter__(self):
+#         print('__enter__() is call!')
+#         return self
+
+#     def dosomething(self):
+#         x = 1/0
+#         print('dosomethong!')
+
+#     def __exit__(self, exc_type, exc_value, traceback):
+#         print('__exit__() is call!')
+#         print(f'type:{exc_type}')
+#         print(f'value:{exc_value}')
+#         print(f'trace:{traceback}')
+#         print('__exit()__ is call!')
+#         return True
+
+# with Test() as sample:
+#     sample.dosomething()
+# # __enter__() is call!
+# # __exit__() is call!
+# # type:<class 'ZeroDivisionError'>
+# # value:division by zero
+# # trace:<traceback object at 0x000000000299A548>
+# # __exit()__ is call!
+
 # 19 return
 # 保留函数最终的值，并终结程序运行
 
