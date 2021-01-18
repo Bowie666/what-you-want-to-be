@@ -10,6 +10,17 @@ import keyword
 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']
 """
 
+# 19 return
+# 保留函数最终的值，并终结程序运行
+
+# 18 raise
+# 抛出异常
+# raise [Exception[,args[,traceback]]] 
+# 语句中Exception是异常的类型 例如: NameError 参数是一个异常参数值
+
+# 17 pass
+# 占位符
+
 # 16 nonlocal
 # 用于标识外部作用域的变量
 # 它是用在封装函数中的 且一般使用于嵌套函数的场景中
@@ -131,7 +142,7 @@ import keyword
 # assert 1 == 2  # AssertionError
 # assert 1 == 1
 
-# 2 and or
+# 2 and or not ---> 优先级 not > and > or
 # and 和 or 逻辑关系用语
 # False and 返回 False 不执行后面的语句
 # True or 直接返回True，不执行后面的语句 
