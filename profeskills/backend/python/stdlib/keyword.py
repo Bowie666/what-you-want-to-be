@@ -10,6 +10,57 @@ import keyword
 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']
 """
 
+# 16 nonlocal
+# 用于标识外部作用域的变量
+# 它是用在封装函数中的 且一般使用于嵌套函数的场景中
+# 闭包只能读外部函数的变量，而不能改写它
+# def a():
+#   x = 0
+#   def b():
+#     print(locals())  # {'x': 0}
+#     y = x + 1
+#     print(locals())  # {'x': 0, 'y': 1}
+#     # x = x + 1  # UnboundLocalError: local variable 'x' referenced before assignment
+#     print(x, y)  # 0 1
+#   return b
+ 
+# a()()
+# ----下面是 nonlocal 的用法
+# def a():
+#   x = 0
+#   def b():
+#     print(locals())  # {'x': 0}
+#     y = x + 1
+#     print(locals())  # {'x': 0, 'y': 1}
+#     print(x, y)  # 0 1
+#   return b
+# a()()
+
+
+# 15 lambda
+# 匿名函数，此关键字可以用一行实现一个函数
+
+# 14 is
+# (1)判断两个变量的指向是否完全一致，及内容与地址需要完全一致，才返回True，否则返回False
+# (2)判断变量是否为某个类的实例
+# 很特殊的两个例子
+# a = 10
+# b = 10
+# print(a is b)  # True
+# a = 10
+# def f():
+#     return 10
+# print(f() is a)  # True
+# 第二个 这两个不一样的原因是因为字节码的问题 完全看不懂
+# https://github.com/hinus/railgun/blob/master/src/main/python/rgparser/show.py
+# a = 10.0
+# b = 10.0
+# print(a is b)  # True
+# a = 10.0
+# def f():
+#     return 10.0
+# print(f() is a)  # False
+
 # 13 global
 # 一般在局部或函数内对全局变量进行修改，须在局部用 global 声明变量,不然无法修改
 # a = 1
