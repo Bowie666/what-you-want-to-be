@@ -10,6 +10,33 @@ import keyword
 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']
 """
 
+# 13 global
+# 一般在局部或函数内对全局变量进行修改，须在局部用 global 声明变量,不然无法修改
+# a = 1
+# print(a)  # 1
+# def buti(num):
+#     print(num)  # 5
+#     global a
+#     print(a)  # 1
+#     a = num
+#     print(a)  # 5
+# buti(5)
+# print(a)  # 5
+
+# 12 import from
+# 导包
+# from 导包进来的变量容易被覆盖 import 的不会
+# from math import pi
+# print(pi)
+# pi = 666
+# print(pi)
+
+# import math
+# print(math.pi)
+
+# 11 for in while
+# 循环语句
+
 # 10 try except else finally
 # 有异常执行 except 没异常执行 else 不管有没有异常执行 finally
 
