@@ -17,6 +17,7 @@ git commit
 位运算：（1）&（2） | （3）~（4） ^
 逻辑运算：（1）and（2） or （3）not
 关系运算：（1）in （2）not in"""
+from typing import NamedTuple
 import urllib.request
 # import psutil
 import time
@@ -35,7 +36,39 @@ from datetime import datetime
 from pprint import pprint
 
 # import numpy as np
+# class funk():
+#     def a():
+#         logger.debug('a This is debug')
+#         logger.info('a This is info')
+#         logger.warning('a This is warning')
+#         logger.error('a This is error')
+#         logger.critical('a This is critical')
+#         return 3
 
+#     def b(nux):
+#         logger.debug('b This is debug')
+#         logger.info('b This is info')
+#         logger.warning('b This is warning')
+#         logger.error('b This is error')
+#         logger.critical('b This is critical')
+#         return nux
+
+# import logging
+
+# # Handy way for getting a dedicated logger for every module separately
+# logger = logging.getLogger("funk")
+# # logger.setLevel(logging.WARNING)
+# # logger.setLevel(logging.DEBUG)
+
+# we = funk.a()
+# print(we)
+
+
+# long_story = ('Lorem ipsum dolor sit amet, consectetur adipiscing elit.' 
+#               'Pellentesque eget tincidunt felis. Ut ac vestibulum est.' 
+#               'In sed ipsum sit amet sapien scelerisque bibendum. Sed ' 
+#               'sagittis purus eu diam fermentum pellentesque.')
+# print(long_story)
 # if 2 != 5 or 2!=3:
 #     print(1)
 # else:
@@ -144,6 +177,30 @@ from pprint import pprint
 # # 关闭数据库连接
 # db.close()
 
+# ===============9300=========form
+detect_url = "http://192.168.0.114:20601/api/analysis/form"
+imgpath = r"C:\Users\Administrator\Desktop\weifang_ceju_test\99000843136234_20200918160102.jpg"
+
+headers = {"accept": "application/json"}
+
+with open(imgpath, "rb") as f:
+    img = f.read()
+
+ann_time = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')
+
+data = {
+    "push_url": detect_url,
+    "model": "transmission_channel_hidden_troubl",
+    "threshold": "0.5",
+    "timestamp": [ann_time, ann_time, ann_time]
+}
+
+files = {"image": (os.path.basename(imgpath), img, 'image/jpg')}
+resp = requests.post(detect_url, headers=headers, data=data, files=files)
+print(resp.status_code)
+result = resp.json()
+print(result)
+print(resp.get('status_code'))
 
 
 # url = "http://58.58.111.158:20701/api/autopush/analysis"
@@ -169,8 +226,8 @@ from pprint import pprint
 # print(resp.text)
 
 # # p/rint(os.getcwd())
-# url = "http://58.58.111.158:20701/api/autopush/analysis"
-# imgpath = r"D:\Users\Administrator\Desktop\garbage\暂时不\tuppain\ml\58748.jpg"
+# url = "http://58.58.111.158:20601/api/autopush/analysis"
+# imgpath = r"C:\Users\Administrator\Desktop\测试创建数据集\images\99000843017596_20201014152605.jpg"
 # headers = {
 #     # "Content-Type":"multipart/form-data",
 #     "accept":"application/json"
@@ -178,10 +235,10 @@ from pprint import pprint
 # with open(imgpath, "rb") as f:
 #     img = f.read()
 # data = {
-#     "push_url": "http://58.58.111.158:20803/aiannotate?id=xiaopihai",
+#     "push_url": "http://58.58.111.158:20803/aiannotate?id=5f97c6321df1f2c3754f2762",
 #     "model": "transmission_channel_hidden_trouble",
 #     "threshold": "0.6",
-#     "timestamp": ["2020-08-14T03:02:02.719Z", "2020-08-14T03:02:02.719Z", "2020-08-14T03:02:02.719Z"]
+#     "timestamp": ["2020-10-27T03:02:02.719Z", "2020-10-27T03:02:02.719Z", "2020-10-27T03:02:02.719Z"]
 # }
 # files = {"image": (os.path.basename(imgpath), img, 'image/jpg')}
 # # (get_filename(path), image_content, 'image/jpg')
@@ -306,17 +363,23 @@ from pprint import pprint
 # print(a[1])
 # print(a[0])
 # print(type(a[0]))
+# ------------- 时间处理 -----------
 # # date = "2018-04-20 15:42:54"
 # date = "2020-05-07 11:03:18"
-#
-#
+# dat = "2020-08-17-15-00"
+
 # #转换成时间数组
-# timeArray = time.strptime(date, "%Y-%m-%d %H:%M:%S")
-#
+# # timeArray = time.strptime(dat, "%Y-%m-%d-%H-%M")
+# timeArray = datetime.strptime(dat, "%Y-%m-%d-%H-%M")
+# print(timeArray)
+# tia = timeArray.strftime("%Y-%m-%dT%H:%M:%S.%f")
+# print(tia)
 # #1).转换成时间戳
-# timestamp = time.mktime(timeArray)
-# print(int(timestamp))
-# print(int(time.time()) - int(timestamp))
+# # timestamp = time.mktime(timeArray)
+# # print(int(timestamp))
+# # print(int(time.time()) - int(timestamp))
+# print(datetime.now())
+# ------------- 时间处理 end-----------
 # log_dir = 'ss'
 # b = 'tensorboard --logdir={} --port=8010 --host=0.0.0.0'.format(log_dir)
 # print(b)

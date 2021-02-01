@@ -6,14 +6,442 @@ import time
 import gzip
 from hashlib import md5
 import sys
-import io, datetime
+import io
 from xml.dom.minidom import parse
 from xml.dom import minidom
 import shutil
 import json
-from PIL import Image
+# from PIL import Image
 
+from datetime import datetime, timedelta
 import os
+import re
+import requests
+import glob
+
+# coding:utf-8
+# import cv2
+# import imageio
+# from scipy import misc
+from PIL import Image
+from matplotlib import pyplot as plt
+import rsa
+import redis
+
+
+# from concurrent.futures import ThreadPoolExecutor
+# thread_pool = ThreadPoolExecutor(4)
+
+# date_day = time.strftime("%Y%m%d")  # 20210120
+# que_name = "fcm_video_name@127.0.0.1@" + date_day
+
+# r = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True)
+
+# # vpath = "/SDXL/FCMUpload/99000843024138/202101/"
+# vpath = r"C:\Users\Administrator\Desktop\video"
+
+# for pa in os.listdir(vpath):
+# 	ppa = pa.split('.')
+# 	if ppa[1] == 'mp4':
+# 		old_path = os.path.join(vpath, pa)
+# 		# 把视频文件复制几次  比如 原来有5个mp4文件 复制3次 就成了15个视频
+# 		for ti in range(500):
+# 			new_path = os.path.join(vpath, f'{ppa[0]}{ti}.{ppa[1]}')
+# 			shutil.copy(old_path, new_path)
+
+
+# # for i in range(1000):
+# j = 0
+# for pa in os.listdir(vpath):
+#     if pa.split('.')[-1] == "mp4":
+#         # print(pa, type(pa))
+#         r.rpush(que_name, pa)
+#         j += 1
+# print(j)
+
+
+# while True:
+#     date_day = time.strftime("%Y%m%d")
+#     que_name = "fcm_video_name@127.0.0.1@"+date_day
+#     data = r.rpop(que_name)
+#     # print(data, type(data))  # b'ZYA20201000000053_20201209073023_23.mp4' <class 'bytes'>
+#     if not data:
+#         time.sleep(5)
+#         continue
+#     data_split = data.split("_")
+#     deviceID = data_split[0]
+#     date_time = data_split[1][:12]
+#     path = date_time[:6]
+#     video_path = os.path.join("/data/SDXL/FCMUpload", deviceID, path, data)# /data/SDXL/FCMUpload/deviceID/202101/deviceID_
+#     print({str([date_time, deviceID, video_path]):int(date_time)})
+
+# def cou(n):
+#     while n>0:
+#         yield n
+#         n -= 1
+
+# c = cou(5)
+# # print(c)
+# print(c.__next__())
+# print(next(c))
+# print(next(c))
+# print(next(c))
+# print(next(c))
+# print(next(c))
+# print(next(c))
+# print(next(c))
+
+# print(time.time())
+# from concurrent.futures import ThreadPoolExecutor
+# thread_pool = ThreadPoolExecutor(4)
+
+# def dect(imgpath, detect_url):
+#     headers = {"accept": "application/json"}
+
+#     with open(imgpath, "rb") as f:
+#         video = f.read()
+
+#     ann_time = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')
+
+#     data = {
+#         "push_url": "http://192.168.0.120:20723/vid",
+#     }
+
+#     files = {"video": (os.path.basename(imgpath), video, 'video/mp4')}
+#     resp = requests.post(detect_url, headers=headers, data=data, files=files)
+#     result = resp.json()
+
+# videoPath = r"C:\Users\Administrator\Desktop\video"
+# video_count = os.listdir(videoPath)
+# detect_url = "http://192.168.0.120:9009/api/dance/analysis"
+
+# i = 1
+# for vi in video_count:
+#     video_abs = os.path.join(videoPath, vi)
+#     thread_pool.submit(dect, video_abs, detect_url)
+#     i += 1
+#     print(i)
+
+
+# url = "http://192.168.0.114:20601/api/models?detail=true"
+# resp = requests.get(url)
+# model_data = resp.json()
+
+# for mod in model_data["models"]:
+#     print(mod["api_name"])
+
+
+
+# print(ra)
+# # -------------------------base64 begin-------------------
+# s = "你好"
+
+# bs = base64.b64encode(s.encode("utf-8")) # 将字符为unicode编码转换为utf-8编码
+# print(bs) # 得到的编码结果前带有 b
+
+# bbs = str(base64.b64decode(bs), "utf-8")
+# print(bbs) # 解码
+
+# bs = str(base64.b64encode(s.encode("utf-8")), "utf-8")
+# print(bs) # 去掉编码结果前的 b
+
+# bbs = str(base64.b64decode(bs), "utf-8")
+# print(bbs) # 解码
+# # -------------------------base64 end-------------------
+
+
+# # -----------------------base
+# gallui = b'HAz8dmtABxxYb19q2JzEmjYtzLX31QrM3B7lKGbhaeT/wd9meooh2dfUcQdpw1vXsp9GRfjPLEKjJas2PyL/Ra4DiOZ/oGoez1s7RoOtCflbp3mamegQh7TboVSGgP/ci+xnMTgrHRVwLYZMYro+QVyXMFmMujS/H5rSAwUMJpM='
+# msg = 'MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAJ/RJOOoRGHHbTH4wxdIThgi3E0GxDXQq7NfYFLe7GOeHa/EvxqyqYxT3Hg5V12B0IwzPrVsXNyxKaqzQf3UJe8j56p9gicF/OIz3iw0XLhUGWx81iFs1f9CbEsgks5NUlzyDKdc/rsFGmvbcNahGB+CwuFYiSFjG2KNpOmkCAhjAgMBAAECgYEAnJm5hgKqDw31Z9QUhsnpDCmMqUWKGhmBReCdaFbcV7jl6gfmIukSzliWXpABlbTQf7DvL6MhU3eeFpBUh77L83vrgkOyLEfLkBUrnhBuTRVojb+ytBLHaQsv4RZxIyPoNesZb8O7xYb3ABqPWAQYtJJXV/nCfP+scAxd9b7y7eECQQDh8ieJUVsEQYUVlm5YFTCFFndzZeV+X0sWui4PwSrpiGnVkQiz3scec/zwg8o9e8ONsW6QPRg+YyS+461WX+Z7AkEAtRMvi4+uig1bYJVmci7vrAlASJbpSX3fQOhmR26V1vurQ0PvGhoSXL3koWcSCT5jfMpKG8lp4qCIBAFidS71OQJBAMMJwU8rxyF5XWQxIrcuM1/u8NXQU7YulCbeN/yphl1ov9L3C0gZOlDzVphXazB/sWKSkxo3YsIX2xRcfLheuBkCQHpwlba+GlyZOY+ulk5hdIkU3FX5TZf3OC4wt3BX05RCKwVZ+2Tf+kih0uZcxrJfcHBibQgrAqFOwYpL0WLBtOkCQQDHlYgH9lpoM0ytJZb/EJNaa0maBB57YvP4wcc7uYLnQ0/epMxYPnlS48BLBPq3dAzRxZu7CgjpPOAUv28+oh9Z'
+
+# # bs = base64.b64encode(gallui.encode("utf-8"))
+# # print(bs)
+# bbs = str(base64.b64decode(gallui))
+# print(bbs) # 解码
+# pk = str(base64.b64decode(msg), "utf-8")
+# print(pk)
+# # ----------------------------end
+
+
+
+
+# gallui = 'HAz8dmtABxxYb19q2JzEmjYtzLX31QrM3B7lKGbhaeT/wd9meooh2dfUcQdpw1vXsp9GRfjPLEKjJas2PyL/Ra4DiOZ/oGoez1s7RoOtCflbp3mamegQh7TboVSGgP/ci+xnMTgrHRVwLYZMYro+QVyXMFmMujS/H5rSAwUMJpM='
+
+# msg = 'MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAJ/RJOOoRGHHbTH4wxdIThgi3E0GxDXQq7NfYFLe7GOeHa/EvxqyqYxT3Hg5V12B0IwzPrVsXNyxKaqzQf3UJe8j56p9gicF/OIz3iw0XLhUGWx81iFs1f9CbEsgks5NUlzyDKdc/rsFGmvbcNahGB+CwuFYiSFjG2KNpOmkCAhjAgMBAAECgYEAnJm5hgKqDw31Z9QUhsnpDCmMqUWKGhmBReCdaFbcV7jl6gfmIukSzliWXpABlbTQf7DvL6MhU3eeFpBUh77L83vrgkOyLEfLkBUrnhBuTRVojb+ytBLHaQsv4RZxIyPoNesZb8O7xYb3ABqPWAQYtJJXV/nCfP+scAxd9b7y7eECQQDh8ieJUVsEQYUVlm5YFTCFFndzZeV+X0sWui4PwSrpiGnVkQiz3scec/zwg8o9e8ONsW6QPRg+YyS+461WX+Z7AkEAtRMvi4+uig1bYJVmci7vrAlASJbpSX3fQOhmR26V1vurQ0PvGhoSXL3koWcSCT5jfMpKG8lp4qCIBAFidS71OQJBAMMJwU8rxyF5XWQxIrcuM1/u8NXQU7YulCbeN/yphl1ov9L3C0gZOlDzVphXazB/sWKSkxo3YsIX2xRcfLheuBkCQHpwlba+GlyZOY+ulk5hdIkU3FX5TZf3OC4wt3BX05RCKwVZ+2Tf+kih0uZcxrJfcHBibQgrAqFOwYpL0WLBtOkCQQDHlYgH9lpoM0ytJZb/EJNaa0maBB57YvP4wcc7uYLnQ0/epMxYPnlS48BLBPq3dAzRxZu7CgjpPOAUv28+oh9Z -----END RSA PRIVATE KEY-----'
+# #  = "北京"
+# # print(msg.encode(encoding = "utf-8"))#unicode编码转换为utf-8编码
+# prikeyp = msg.encode(encoding = "utf-8").decode(encoding = "utf-8")  #unicode编码转换为utf-8编码，再转化为unicode编码+
+# galluid = gallui.encode(encoding = "utf-8").decode(encoding = "utf-8")
+# print(galluid)
+
+# privkey = rsa.PrivateKey.load_pkcs1(prikeyp)
+# uid = rsa.decrypt(galluid, privkey)
+
+
+
+# gallui = 'HAz8dmtABxxYb19q2JzEmjYtzLX31QrM3B7lKGbhaeT/wd9meooh2dfUcQdpw1vXsp9GRfjPLEKjJas2PyL/Ra4DiOZ/oGoez1s7RoOtCflbp3mamegQh7TboVSGgP/ci+xnMTgrHRVwLYZMYro+QVyXMFmMujS/H5rSAwUMJpM='
+
+# pubkeyp = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCf0STjqERhx20x+MMXSE4YItxNBsQ10KuzX2BS3uxjnh2vxL8asqmMU9x4OVddgdCMMz61bFzcsSmqs0H91CXvI+eqfYInBfziM94sNFy4VBlsfNYhbNX/QmxLIJLOTVJc8gynXP67BRpr23DWoRgfgsLhWIkhYxtijaTppAgIYwIDAQAB'
+
+# pubkeyp = base64.b64decode(pubkeyp.encode())
+# prikeyp = base64.b64decode(prikeyp.encode())
+
+# # galluid = base64.b64decode(gallui)
+# # base64.b64decode(b64_sign)
+# print(pubkeyp.decode('gbk'))
+# print(prikeyp)
+
+# privkey = rsa.PrivateKey.load_pkcs1(prikeyp)
+
+# uid = rsa.decrypt(gallui, privkey)
+# print(uid)
+# import base64
+# from M2Crypto import BIO, RSA
+ 
+# with open("public_key.pem", 'r') as f:
+#     pubkey = f.read()
+# with open("private_key.pem", 'r') as f:
+#     prikey = f.read()
+ 
+# # 加密
+# text = "ABCDEF".encode('utf-8')  # 明文
+# pub_bio = BIO.MemoryBuffer(pubkey.encode('utf-8'))  # 公钥字符串
+# pub_rsa = RSA.load_pub_key_bio(pub_bio)  # 加载公钥
+# secret = pub_rsa.public_encrypt(text, RSA.pkcs1_padding)  # 公钥加密
+# sign = base64.b64encode(secret)  # 密文base64编码
+# print(sign)
+ 
+# # 解密
+# b64_sign = "uhBqhevT0E5+WT++HX+pGzSy7YGskBQODuvoV+hf0k8cSyXG/GuAT4LKYaCiT9qiEGlbWxCIH51Qt1s0y2X56TbNja93AbzXiFWzsC2H6vwo3ZFcoj+YqUBsax+Gad0I6NME9lalpKsPtWqi4W/b3VbG5Mx+WBJ+L17GR7ZvWMo=" # base64密文
+# cipher = base64.b64decode(b64_sign)  # base64解码
+# pri_bio = BIO.MemoryBuffer(prikey.encode('utf-8'))  # 加载私钥
+# pri_rsa = RSA.load_key_bio(pri_bio)
+# plain = pri_rsa.private_decrypt(cipher, RSA.pkcs1_padding)  # 解密
+
+
+
+# url = "http://192.168.0.114:20601/api/models?detail=true"
+# resp = requests.get(url)
+# model_data = resp.json()
+
+# for mod in model_data["models"]:
+#     print(mod["api_name"])
+# str_time = '2020-11-17-02-21'
+
+# struc_time = datetime.strptime(str_time, "%Y-%m-%d-%H-%M")
+# struc_time = struc_time - timedelta(hours=8)
+# strft_time = struc_time.strftime("%Y-%m-%dT%H:%M:%S.%f")
+
+# print(strft_time)
+# https://58.58.111.158:21054/api/upload?imageUrl=http://58.58.236.70:8000/upload/99000843117536/202008/99000843117536_20200813000030_2_res.jpg&dataType=4&comment=测试 ， 。中文标点符号&token=emh5YXBpOnpoeUB6eTkxMSM=
+# https://58.58.111.158:21054/api/upload?imageUrl=http://58.58.236.70:8000/upload/99000843117536/202008/99000843117536_20200813000030_2_res.jpg&dataType=4&alarmType=2&comment=&token=emh5YXBpOnpoeUB6eTkxMSM=
+# imgurl = "http://58.58.236.70:8000/upload/99000843117536/202008/99000843117536_20200813.jpg"
+# comment = "测试 ， 。中文标点符号"
+# # comment = "1"
+# url = f"https://58.58.111.158:21054/api/upload?imageUrl={imgurl}&dataType=4&comment={comment}&token=emh5YXBpOnpoeUB6eTkxMSM="
+# print(url)
+# resp = requests.get(url, verify=False)
+# print(resp.content)
+# print(0 is None)
+
+
+# # url = "https://58.58.111.158:21054/api/deviceList?token=emh5YXBpOnpoeUB6eTkxMSM="
+# url = "https://58.58.111.158:21054/api/filterList?place=山东&from=0&size=20&token=emh5YXBpOnpoeUB6eTkxMSM="
+# # url = "https://58.58.111.158:21054/api/filterList?deviceId=99000843075029&token=emh5YXBpOnpoeUB6eTkxMSM=&place=山东"
+# # https://58.58.111.158:21054/api/deviceList?from=12&size=12&token=emh5YXBpOnpoeUB6eTkxMSM=&deviceId=99000843015645
+# headers = {
+#     "Content-Type": "application/json",
+# }
+# data = {
+#     "_source": {"excludes": ["blob"]},
+#     "track_total_hits": True,
+#     "from": 0,
+#     "size": 1,
+#     "query": {"query_string": {"query": "*"}},
+#     "sort": [{"@timestamp": {"order": "desc"}}]
+# }
+
+# resp = requests.get(url, headers=headers, verify=False)
+# print(resp.json())
+
+
+# print(9 // 900)
+# for i in range(2):
+#     print(8*(i))
+#     print(8*(i+1))
+
+
+
+
+
+
+
+# jsonpaht = r"C:\Users\Administrator\Desktop\pass"
+
+# aim = r"C:\Users\Administrator\Desktop\paod"
+
+# shutil.copytree(jsonpaht, aim) #oldfile和newfile都只能是文件
+
+# image_path = r"C:\Users\Administrator\Desktop\xmls\198_20200410060104.JPEG"
+# # 使用pillow读取图片，获取图片的宽和高
+# img_pillow = Image.open(image_path)
+# img_width = img_pillow.width # 图片宽度
+# img_height = img_pillow.height # 图片高度
+# # print("width -> {}, height -> {}".format(img_width, img_height))
+
+# # img_cv = cv2.imread(image_path)
+# # img_imageio = imageio.imread(image_path)
+# # img_scipy = misc.imread(image_path)
+# img_matplot = plt.imread(image_path)
+
+# # print(img_cv.shape)
+# # print(img_imageio.shape)
+# # print(img_scipy.shape)
+# print(img_matplot.shape[0])
+# print(img_matplot.shape[1])
+# print(img_matplot.shape[2])
+
+# print(int('11000011', 2))
+# bo = [{'tag': 'cementmixer', 'score': 1, 'warning': 0, 'reserved': 0, 'frame': {'x': 536.0, 'y': 550.0, 'width': 186.0, 'height': 87.0}, 'segmentation': []}, 
+# {'tag': 'cementmixer', 'score': 1, 'warning': 0, 'reserved': 0,  'segmentation': []}]
+# for i in bo:
+#     i['color'] = "red"
+# print(bo)
+# path = '/data/data_manage/data/输电通道/2020-10-14/测试数据集/images/9900.jpg'
+# folder_path = path.rsplit('/', 1)[0]
+# print(folder_path)
+# error_file_path = folder_path.replace('/images', '/error.txt')
+# print(error_file_path)
+
+# image_name = os.path.basename("/data/data_manage/data/输电通道/2020-10-14/测试数据集/images/9900.jpg")
+# print(image_name)
+# li = ['192.168.1.99_01_55 29.jpg', '_01_5529.jpg','192.168.1.jpg', 'birdnest.jpg', 'VID_20200417_114049 2.jpg', 'bir_dnest.jpg', '20200417_114049.jpg', '中文.jpg']
+# for i in li:
+#     filename = i.rsplit('.', 1)[0]
+#     if not (re.match(r'[a-zA-Z0-9_]+$', filename) and not re.match(r'[_]', filename)):
+#     # if ' ' or '.' in filename:
+#         print(filename)
+
+# path = {'ad': {}}
+# def pa():
+#     """
+#     args: eee
+#     returns: sdfaf
+#     """
+#     return 6
+
+# print(help(pa))
+# --------------------d当月1号
+# datetime.date(datetime.date.today().year,datetime.date.today().month,1)
+# #当月1号
+# datetime.date.today().replace(day=1)
+# #上月1号
+# last = (datetime.date.today().replace(day=1) - datetime.timedelta(1)).replace(day=1)
+# print(datetime.date(datetime.date.today().year,datetime.date.today().month,1))
+# print(type(datetime.date(datetime.date.today().year,datetime.date.today().month,1)))
+# print(last)
+# print(type(last))
+
+# def test(dot):
+#     with open(r"C:\Users\Administrator\Desktop\5699999999999.png", "wb")  as target:
+#         target.write(dot)
+
+# with open(r"C:\Users\Administrator\Desktop\tt12.jpg", "rb") as fp:
+#     test(fp.read())
+
+# paths = "/app/tools/ModelTrain/image"
+# print(os.path.basename(paths))
+# user_list = ["ad", "b", "c"]
+# # print(user_list.index("b"))
+# now_user_index = user_list.index("b")
+# if (now_user_index + 1) >= len(user_list):
+#     next_username = user_list[0]
+# else:
+#     next_username = user_list[now_user_index + 1]
+# print(next_username)
+# # ----------查找函数路径 用法-------------
+# print(os.path.exists.__code__)
+# print(os.__file__)
+# # ----------查找函数路径 用法-------------
+# # ----------list 用法-------------
+# s = '123'
+# print(list(s))  # ['1', '2', '3']
+# print([s])
+
+# # -------python 获取文件夹下文件个数----------
+# # path_file_number=glob.glob('D:/case/test/testcase/checkdata/*.py')#或者指定文件下个数
+# path_file_number=glob.glob(pathname='*.py') #获取当前文件夹下个数
+# print(path_file_number)
+# print(len(path_file_number))
+# # ---------python 获取文件夹下文件个数  end ------------
+
+# ----------从es 公有集获取数据----------
+# publicset_url = "http://elastic:ELK@911$@58.58.111.158:20101/zhy-detect-pub/_search"
+
+# headers = {
+#     "Content-Type":"application/json",
+# }
+
+# data = {
+#     "_source": {"excludes": ["blob"]},
+#     "track_total_hits": True,
+#     "from": 0,
+#     "size": 10,
+#     "query": {"query_string": {"query": "_id: COCO_train2014_000000332038_pub"}},
+#     "sort": [{"@timestamp": {"order": "desc"}}]
+#     }
+
+# resp = requests.post(publicset_url,headers=headers, data=json.dumps(data))
+# res_json = resp.json()
+
+# img_detail = res_json['hits']['hits'][0]['_source']
+# width = img_detail['width']
+# height = img_detail['height']
+# name = img_detail['name']
+# annotations = img_detail['annotations']
+
+# # 来 处理标注数据
+# xml_ann = []
+# json_ann = []
+# for annotate in annotations:
+#     # 判断数据是否超出范围
+#     x = int(annotate["bbox"][0])
+#     y = int(annotate["bbox"][1])
+#     w = int(annotate["bbox"][2])
+#     h = int(annotate["bbox"][3])
+
+#     x = 0 if x < 0 else x
+#     y = 0 if y < 0 else y
+
+#     w = width if (x + w) > width else w
+#     h = height if (y + h) > height else h
+
+#     xml_ann_data = {
+#         "tag": annotate["label"],
+#         "score": 1,
+#         "warning": 0,
+#         "reserved": 0,
+#         "frame": {
+#             "x": x,
+#             "y": y,
+#             "width": w,
+#             "height": h
+#         },
+#         "segmentation": []
+#         }
+#     xml_ann.append(xml_ann_data)
+
+#     # 来 处理json
+#     for seg in annotate["segmentation"]:
+#         json_ann_data = {
+#             "tag": annotate["label"],
+#             "segmentation": seg
+#             }
+#         json_ann.append(json_ann_data)
+# print(xml_ann)
+# print(json_ann)
+
+#----------------公有集end--------------
 
 # # --------------- 缩略图 ---------------------
 # img = r"C:\Users\Administrator\Desktop\tt.jpg"
